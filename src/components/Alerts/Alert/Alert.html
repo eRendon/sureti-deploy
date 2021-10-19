@@ -1,0 +1,17 @@
+
+<div v-if="alertState.show" class="sureti-alert-pill">
+  <!--
+  <span class="sureti-alert-pill-icon">
+    <i class="fas fa-bell"></i>
+  </span>
+-->
+	<span class="sureti-alert-pill-message">
+    {{ alertState.text }}
+  </span>
+	<button @click="onDismiss" class="sureti-alert-pill-close">
+		<span>×</span>
+	</button>
+</div>
+<div v-if="alertState.show" class="sureti-alert-pill-overlay"></div>
+
+<!--https://www.creative-tim.com/learning-lab/tailwind-starter-kit/documentation/css/alerts-->

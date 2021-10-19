@@ -1,0 +1,41 @@
+<div>
+    <header id="sureti-dashboard-list-header">
+        <h2>Garantías</h2>
+        <button @click="newGuarantee" v-if="!isToPayment" id="sureti-dashboard-item-add">Añadir +</button>
+        <new-guarantee></new-guarantee>
+    </header>
+	<div class="sureti-guarantee-list-box" @click="onDetailGuarantee(index, guarantee)" v-for="(guarantee, index) in guarantees">
+		<img class="guarantee-icon property" src="@/assets/img/icons/property.svg" />
+		<div class="guarantee-summary-info">
+            <h4>{{ guarantee.real_estate_address }}</h4>
+            <p class="guarantee-location">
+                <span>{{ guarantee.real_estate_city ? guarantee.real_estate_city + ',&nbsp;' : '' }}</span>
+                    <span>{{ guarantee.real_estate_country != '' ? guarantee.real_estate_country : '' }}</span>
+            </p>
+        </div>
+		<div v-if="!isToPayment" class="guarantee-expand-icon" :class="{'is-detail': index === detailGuarantee}">
+            <img class="guarantee-icon property" src="@/assets/img/icons/expand.svg" />
+        </div>
+<!--        Bloque detalle-->
+            <div class="guarantee-expand-box" :class="{'open': index === detailGuarantee && !isToPayment}">
+                <div class="hide">Fotos</div>
+                <!--            bloque datos-->
+                <div class="sureti-guarantee-list-stats">
+                    <p class="sureti-guarantee-list-stat">
+                        <span class="stat-label">Avalúo</span> <span class="stat-value">{{ $filters.formatCurrency(guarantee.guarantee_value) }}</span>
+                    </p>
+                    <p class="sureti-guarantee-list-stat">
+                        <span class="stat-label">Cupo</span> <span class="stat-value">{{ $filters.formatCurrency(guarantee.guarantee_credit_limit) }}</span>
+                    </p>
+                    <p class="sureti-guarantee-list-stat">
+                        <span class="stat-label">Deuda de capital</span> <span class="stat-value">{{ $filters.formatCurrency(guarantee.loan?.balance) }}</span>
+                    </p>
+                    <p class="sureti-guarantee-list-stat">
+                        <span class="stat-label">Interses en mora</span> <span class="stat-value">{{ $filters.formatCurrency(guarantee.loan?.total_interests_balance) }}</span>
+                    </p>
+                    <br>
+                    <button @click="goToDetail(guarantee.guarantee_id)">Administrar</button>
+                </div>
+            </div>
+	</div>
+</div>

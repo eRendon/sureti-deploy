@@ -1,0 +1,74 @@
+<transition>
+    <div>
+        <transition
+                enter-class="opacity-0"
+                enter-active-class="ease-out transition-medium"
+                enter-to-class="opacity-100"
+                leave-class="opacity-100"
+                leave-active-class="ease-out transition-medium"
+                leave-to-class="opacity-0"
+        >
+            <div
+                    @keydown.esc="closeModalProfile"
+                    v-if="isOpen"
+                    class="z-10 fixed inset-0 transition-opacity"
+            >
+                <div
+                        @click="closeModalProfile"
+                        class="absolute inset-0 bg-black opacity-50"
+                        tabindex="0"
+                ></div>
+            </div>
+        </transition>
+        <aside
+                class="transform top-0 right-0 w-64 bg-white fixed h-full overflow-auto ease-in-out transition-all duration-300 z-30"
+                :class="isOpen ? 'translate-x-0' : 'translate-x-full'"
+        >
+            <div>
+                <div class="card">
+                    <div>
+                        <div>
+                            Imagen de usuario
+                        </div>
+                        <div>
+                            {{ user.first_name }} {{ user.middle_name }} {{ user.last_name }}
+                            <span> || rol ||</span>
+                        </div>
+                    </div>
+                    <div>
+                        <span> Última visita</span>
+                        <span> 23 Abril, 2020</span>
+                    </div>
+                    <div>
+                        Usuario: +57 3162558732
+                    </div>
+                </div>
+
+                <div>
+                    <ul>
+                        <li>
+                            <router-link to="/profile" @click="closeModalProfile">
+                                <label>Mi perfil</label>
+                                <i>profile</i>
+                            </router-link>
+                        </li>
+                        <li>
+                            <a>
+                                <label>Cerrar sesión</label>
+                                <i>log_out</i>
+                            </a>
+                        </li>
+                        <li>
+                            <a>
+                                <label>Ayuda / Contácto</label>
+                                <i>help</i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <!--    </nav>-->
+</transition>

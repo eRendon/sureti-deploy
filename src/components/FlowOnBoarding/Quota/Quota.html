@@ -1,0 +1,12 @@
+<div id="sureti-onboarding-property">
+	<h2 id="sureti-property-credit-estimate">
+		Puedes obtener un préstamo entre
+		<span>{{$filters.formatCurrency(quota.min)}} y {{$filters.formatCurrency(quota.max)}}</span>
+	</h2>
+	<p>* Unico requisito: inmueble libre.</p>
+	<p>Paga mensualmente solo intereses y abona a capital cuando desees. Sin penalidades, 
+		sin comisiones, ni anticipos.
+	</p>
+	<button @click="onCreateLoan">Consigue tu prestamo</button>
+	<router-link to="/user/on-boarding" class="go-back-link"><img src="@/assets/img/icons/arrow-right.svg" />Volver</router-link>
+</div>

@@ -1,0 +1,46 @@
+<div id="sureti-auth-panel">
+<!--	<alert></alert>-->
+	<h2 class="text-center">INICIA SESIÓN</h2>
+	<Form @submit="onLogin" :validation-schema="schema" v-slot="{ errors }" id="sureti-login-form">
+		<div class="mb-4">
+			<label class="text-center hide">
+				Email o celular
+			</label>
+			<Field v-slot="{ field }" name="user" id="email" type="text" placeholder="Email / Celular"/>
+			<span class="text-red-500 text-xs">{{ errors.user }}</span>
+		</div>
+		<div class="mb-6">
+			<label class="text-center hide">
+				Contraseña
+			</label>
+			<Field name="password" id="password" type="password" placeholder="Contraseña"/>
+			<span class="text-red-500 text-xs">{{ errors.password }}</span>
+		</div>
+		<div>
+			<button type="submit">
+				INGRESAR
+			</button>
+		</div>
+	</Form>
+	<div class="sureti-login-links">
+		<div class="login-link-box">
+			<h4>No tienes cuenta aún?</h4>
+			<p>Al crear una cuenta podrás solicitar préstamos y/o invertir en garantías hipotecarias.</p>
+			<router-link to="/register" class="login-link register-link">
+				<button>
+					CREAR CUENTA
+				</button>
+			</router-link>
+		</div>
+		<div class="login-link-box">
+			<h4>Olvidaste tu contraseña?</h4>
+			<p>No hay problema, te ayudamos a recuperar el acceso a tu cuenta.</p>
+			<router-link to="/recovery-password" class="login-link forgot-link">
+				<button>
+					RECUPERAR
+				</button>
+			</router-link>
+		</div>
+	</div>
+</div>
+

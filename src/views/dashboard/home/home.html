@@ -1,0 +1,18 @@
+<div class="sureti-flex-row">
+    <div id="sureti-dashboard-stats-column" class="sureti-flex-col" >
+        <div v-for="(indicator, index) in indicators">
+            <indicator :data="indicator" class="sureti-dashboard-stat" :id="'sureti-stat-' + index"> </indicator>
+            <RequestModal></RequestModal>
+        </div>
+    </div>
+    <div id="sureti-dashboard-list-column" class="sureti-flex-col" >
+        <div id="sureti-dashboard-list-type">
+            <button @click="onSelectComponent('Guarantee')">Ver garantias</button>&nbsp;
+            <button @click="onSelectComponent('Movements')">Ver movimientos</button>
+        </div>
+
+        <div>
+            <component :is="component.isComponent"></component>
+        </div>
+    </div>
+</div>

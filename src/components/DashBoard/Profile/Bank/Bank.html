@@ -1,0 +1,45 @@
+<div>
+    <div v-if="isToUpdate">
+        <h2>Se ha enviado un codigo de confirmacion</h2>
+        <div>
+            <input v-model="sensitiveData.temporal_code" type="text" placeholder="Código temporal">
+        </div>
+        <button  @click="updateSensitiveInformation">Actualizar informacion</button>
+        <button  @click="getCode">Reenviar codigo</button>
+    </div>
+    <div v-else>
+        <h2>Información bancaria</h2>
+        <div :id="'movements-' + index" :key="'bank-movements' + index" v-for="(dataBank, index) in sensitiveData.bank_account_information">
+            <input placeholder="Banco"
+                   :id="'bank-' + index"
+                   type="text"
+                   v-model="dataBank.bank">
+            <input placeholder="Titula de la cuenta"
+                   type="text"
+                   :id="'bank_account_holder-' + index"
+                   v-model="sensitiveData.bank_account_information[index].bank_account_holder">
+            <input placeholder="Documento del titular"
+                   type="text"
+                   :id="'bank_account_holder_identification-' + index"
+                   v-model="sensitiveData.bank_account_information[index].bank_account_holder_identification">
+            <input placeholder="Número"
+                   type="text"
+                   :id="'bank_account_number-' + index"
+                   v-model="sensitiveData.bank_account_information[index].bank_account_number">
+            <input placeholder="Tipo de cuenta"
+                   type="text"
+                   :id="'bank_account_holder_identification_type-' + index"
+                   v-model="sensitiveData.bank_account_information[index].bank_account_holder_identification_type">
+            <input placeholder="Tipo de identificación"
+                   type="text"
+                   :id="'bank_account_type-' + index"
+                   v-model="sensitiveData.bank_account_information[index].bank_account_type">
+            <button @click="onDeleteBank(index)"
+                    v-if="index > 0 && !sensitiveData.bank_account_information[index].bank_account_number">
+                Eliminar -
+            </button>
+        </div>
+        <button @click="onAddBank">Agregar +</button>
+        <button @click="getCode">Enviar / Guardar</button>
+    </div>
+</div>

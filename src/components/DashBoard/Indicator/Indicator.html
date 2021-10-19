@@ -1,0 +1,9 @@
+<div>
+    <label>{{ data.title }}</label>
+    <span class="sureti-stat-amount">{{ $filters.formatCurrency(data.amount) }}</span>
+    <div @click="data.action" class="sureti-stat-action" v-if="data.nameLink">
+        <div>{{ data.nameLink }}</div>
+        <img class="hover-img" src="@/assets/img/icons/arrow-white-right.svg" />
+        <img class="idle-img" src="@/assets/img/icons/arrow-right.svg" />
+    </div>
+</div>

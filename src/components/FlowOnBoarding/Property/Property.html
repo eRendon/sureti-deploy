@@ -1,0 +1,26 @@
+<div id="sureti-onboarding-property">
+	<div>
+		<h2 v-if="isOnBoarding">Préstamos sobre hipoteca</h2>
+		<p>Nuestro sistema de préstamos conecta a personas con propiedad que requieren fondos, con inversionistas que buscan rendimiento de su capital.</p>
+		<p>Nosotros nos encargamos de gestionar los procesos legales y hacer seguimiento a los pagos de capital e intereses por la duración del préstamo, pero no somos los prestadores. No podemos garantizar que todos los préstamos se lleven a cabo, depende de encontrar inversionistas interesados en invertir según las condiciones pactadas y las condiciones de la garantía soportando el préstamo.</p>
+        
+		<div class="row">
+			<h4>Cuéntanos acerca de tu propiedad:</h4>
+			<div class="column">
+				<label>
+					Avaluo Catastral ({{ $filters.formatCurrency(valueProperty)}})
+					<input v-model="valueProperty" type="text" placeholder="Avaluo Catastral">
+				</label>
+			</div>
+			<div class="column">
+				<label for="isFreeDebt">
+					¿Está la propiedad libre de deudas y procesos legales?<br>
+					<input v-model="isFreeDebt" type="checkbox" id="isFreeDebt">
+				</label>
+			</div>
+		</div>
+
+		<button @click="recordGuarantee">Conoce tu cupo estimado</button>
+	</div>
+	<router-link v-if="isOnBoarding" to="/user/on-boarding" class="go-back-link"><img src="@/assets/img/icons/arrow-right.svg" />Volver</router-link>
+</div>

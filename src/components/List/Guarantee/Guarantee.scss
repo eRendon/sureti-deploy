@@ -1,0 +1,78 @@
+.sureti-guarantee-list-box {
+  padding:10px 15px;
+  margin: 10px 0;
+  border-radius: 8px;
+  background-color: #eee;
+  box-shadow: 0px 1px 1px rgba(0,0,0,0.15);
+  cursor:pointer;
+  transition: background-color 0.1s ease-in-out;
+}
+.sureti-guarantee-list-box:hover {
+  background-color: #f6f6f6;
+}
+
+.guarantee-icon {
+  width:45px;
+  display:inline-block;
+  vertical-align:top;
+  margin-right: 20px;
+}
+.guarantee-summary-info {
+  display:inline-block;
+  vertical-align:top;
+  width: calc(100% - 75px - 35px);
+  margin-right: 20px;
+}
+.guarantee-summary-info h4 {
+  font-size:16px;
+}
+.guarantee-expand-icon {
+  width:25px;
+  padding-top:9px;
+  display:inline-block;
+  vertical-align:top;
+}
+.guarantee-expand-icon img {
+  width:100%;
+  transition: transform 0.2s ease-in-out;
+  cursor:pointer;
+}
+.guarantee-expand-icon.is-detail img {
+  transform: rotate(45deg);
+}
+.guarantee-expand-box {
+  max-height:0;
+  overflow:hidden;
+  opacity:0;
+  transition: 
+    max-height 0.15s ease-in-out,
+    margin 0.15s ease-in-out,
+    padding 0.15s ease-in-out, 
+    opacity 0.15s ease-in-out;
+  border-top: solid 1px #ddd;
+}
+.guarantee-expand-box.open {
+  max-height:300px;
+  opacity:1;
+  margin-top:10px;
+  padding-top:10px;
+}
+#sureti-dashboard-list-header {
+  padding:10px 0;
+  position:relative;
+}
+#sureti-dashboard-list-header #sureti-dashboard-item-add {
+  position:absolute;
+  right:0;
+  top:10px;
+}
+.sureti-guarantee-list-stats {
+  padding:0;
+}
+.sureti-guarantee-list-stats button {
+  margin-top:10px;
+}
+.guarantee-location {
+  color:#5747D7;
+  margin:0;
+}

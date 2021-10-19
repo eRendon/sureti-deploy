@@ -1,0 +1,266 @@
+<div class="">
+    <ProposalModal></ProposalModal>
+    <RequestModal></RequestModal>
+
+    <!-- DETALLES DE LA GARANTÍA -->
+        <div id="sureti-single-guarantee-detail">
+            <img class="guarantee-icon" src="@/assets/img/icons/property.svg" />
+            <div id="sureti-single-guarantee-location">
+                <h3>
+                    <span class="address">{{ guarantee?.real_estate_address ? guarantee?.real_estate_address : 'Sin dirección' }}</span>
+                    <span>{{ guarantee?.real_estate_city ? guarantee.real_estate_city + ',&nbsp;' : '' }}</span>
+                    <span>{{ guarantee?.real_estate_country != '' ? guarantee?.real_estate_country : '' }}</span>
+                </h3>
+<!--                <button id="guarantee-manage-loan">Administrar préstamo</button>-->
+            </div>
+            <div class="sureti-divider"></div>
+            <div id="sureti-single-guarantee-stats">
+                <p>Estado: {{ guarantee.state }}</p>
+                <p class="sureti-guarantee-list-stat">
+                    <span class="stat-label">Avalúo</span> <span class="stat-value">{{ $filters.formatCurrency(guarantee.guarantee_value) }}</span>
+                </p>
+                <p class="sureti-guarantee-list-stat">
+                    <span class="stat-label">Cupo</span> <span class="stat-value">{{ $filters.formatCurrency(guarantee.guarantee_credit_limit) }}</span>
+                </p>
+                <p class="sureti-guarantee-list-stat" v-if="activeLoan">
+                    <span class="stat-label">Deuda de capital</span> <span class="stat-value">{{ $filters.formatCurrency(activeLoan.balance) }}</span>
+                </p>
+                <p class="sureti-guarantee-list-stat" v-if="activeLoan">
+                    <span class="stat-label">Intereses en mora</span> <span class="stat-value">{{ $filters.formatCurrency(activeLoan.total_interests_balance) }}</span>
+                </p>
+                <div v-if="guarantee.state === 'aprobada para préstamos'">
+                    <div v-if="!requests && !activeRequest?.amount" class="guarantee-status-bar">
+                        <p v-if="rejectedRequests.length > 0">Su solicitud ha sido rechazada, por favor, cree otra propuesta</p>
+                        <button @click="openFlowRequest">Crear solicitud de préstamo</button>
+                    </div>
+                    <div v-if="activeRequest?.amount && !createdProposal?.amount && !acceptedProposal?.amount" class="guarantee-status-bar">
+                        <p>Su solicitud está en proceso de estudio</p>
+                    </div>
+                    <div v-if="activeRequest?.amount && createdProposal?.amount" class="guarantee-status-bar">
+                        <p v-if="rejectedProposals">Ha rechazado nuestra propuesta, estamos en proceso de crear otra propuesta.</p>
+                        <button @click="openFlowProposal">Revisar propuesta</button>
+                    </div>
+                    <div v-if="activeRequest?.amount && acceptedProposal?.amount" class="guarantee-status-bar">
+                        <p>Su solicitud está en proceso de desembolso</p>
+                    </div>
+                </div>
+                <div class="sureti-divider"></div>
+                <button v-if="activeLoan?.balance > 0" @click="onCapitalPayment">Abono a capital</button>&nbsp;
+                <button v-if="activeLoan?.total_interests_balance > 0" @click="onInterestPayment">Realizar un pago</button>
+            </div>
+        </div>
+        <!-- GUARANTEE NAV TABS -->
+        <div id="sureti-single-guarantee-tabs">
+            <p>navTab: {{ navTab }}</p>
+            <button @click="navTab = 0">Datos y documentos</button>&nbsp;
+            <button @click="navTab = 1">Propietarios</button>&nbsp;
+            <button @click="navTab = 2">Fotos</button>&nbsp;
+        </div>
+        <div class="sureti-divider"></div>
+        <!-- DATOS DE GARANTÍA -->
+        <div id="sureti-single-guarantee-data" class="sureti-single-guarantee-section" v-if="navTab == 0">
+            <h3>Datos de la garantía</h3>
+            <ul>
+                <li>
+                    <label for="address">Dirección</label>
+                    <input v-model="guarantee.real_estate_address" type="text" id="address">
+                </li>
+                <li class="third">
+                    <label for="area">Área construida (m2)</label>
+                    <input v-model="guarantee.real_estate_area" type="number" id="area">
+                </li>
+                <li class="third">
+                    <label for="estrato">Estrato</label>
+                    <select v-model="guarantee.real_estate_estrato" id="estrato">
+                        <option value="">Seleccione uno</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                    </select>
+                </li>
+                <li class="third">
+                    <label for="idNumber">Número Matricula</label>
+                    <input v-model="guarantee.property_real_estate_id" type="text" id="chipNumber">
+                </li>
+                <li class="third">
+                    <label for="city">Ciudad</label>
+                    <input v-model="guarantee.real_estate_city" type="text" id="city">
+                </li>
+                <li class="third">
+                    <label for="country">País</label>
+                    <input v-model="guarantee.real_estate_country" type="text" id="country" disabled>
+                </li>
+                <button @click="onUpdateAppraisal">Enviar/Guardar</button>
+            </ul>
+            <div>
+                <h3>Documentos de la garantía</h3>
+                <ul>
+                    <li class="third">
+                        <label for="propertyTax">{{ guarantee.propertyTax?.text }}</label>
+                        <input @change="onSelectedTax($event.target.files)" type="file" id="propertyTax">
+                        <!-- FALTA MOSTRAR LISTA DE DOCUMENTOS YA SUBIDOS -->
+                        <div v-for="document in propertyTaxDocuments">
+                            <document-user :document="document"></document-user>
+                        </div>
+                    </li>
+                    <li class="third">
+                        <label for="freedomAndTradition">{{ guarantee.freedomAndTradition?.text }}</label>
+                        <input @change="onSelectedFreedom($event.target.files)" type="file" id="freedomAndTradition">
+                        <!-- FALTA MOSTRAR LISTA DE DOCUMENTOS YA SUBIDOS -->
+                        <div v-for="document in freedomTraditionDocuments">
+                            <document-user :document="document"></document-user>
+                        </div>
+                    </li>
+                    <li class="third">
+                        <label for="houseDeed">Escrituras</label>
+                        <input type="file" id="houseDeed">
+                        <!-- FALTA MOSTRAR LISTA DE DOCUMENTOS YA SUBIDOS -->
+                    </li>
+                    <li class="third">
+                        <ul v-for="(documentFile, index) in filesPropertyFront" >
+                            <div >
+                                <label>{{ documentFile.text }}</label>
+                                <input @change="onSelectedDocument(documentFile, $event.target.files)" type="file">
+                            </div>
+                            <ul>
+                                <li v-if="index > 0">
+                                    <button @click="deleteFileOwnerFront(index)">DELETE</button>&nbsp;
+                                </li>
+                            </ul>
+                        </ul>
+                        <div v-for="propertyFile in propertyDocsFront">
+                            <document-user :document="propertyFile"></document-user>
+                        </div>
+                        <button @click="addFileOwnerFront">AÑADIR NUEVO</button>&nbsp;
+                    </li>
+                    <li class="third">
+                        <ul v-for="(documentFile, index) in filesPropertyBack" >
+                            <div >
+                                <label>{{ documentFile.text }}</label>
+                                <input @change="onSelectedDocument(documentFile, $event.target.files)" type="file">
+                            </div>
+                            <ul>
+                                <li v-if="index > 0">
+                                    <button @click="deleteFileOwnerBack(index)">DELETE</button>&nbsp;
+                                </li>
+                            </ul>
+                        </ul>
+                        <div v-for="propertyFile in propertyDocsBack">
+                            <document-user :document="propertyFile"></document-user>
+                        </div>
+                        <button @click="addFileOwnerBack">AÑADIR NUEVO</button>&nbsp;
+                    </li>
+                </ul>
+            </div>
+            <br>
+            <button @click="onUpdateDocumentsGuarantee">Enviar/Guardar</button>
+        </div>
+        <!-- PROPIETARIOS -->
+        <div id="sureti-single-guarantee-owners" class="sureti-single-guarantee-section" v-if="navTab == 1">
+        <h3>Propietarios</h3>
+        <div>
+            <p>Usuario y propietarios (info de usuario solo se pregunta la primera vez y se le pregunta cada vez si él/ella es uno de los propietarios)</p>
+            <div>
+                <p>Es usted uno de los propietarios?</p>
+                <ul>
+                    <li class="third">
+                        <label for="yesProperty">Sí</label>
+                        <input type="checkbox" id="yesProperty">
+                    </li>
+                    <li class="third">
+                        <label for="notProperty">No</label>
+                        <input type="checkbox" id="notProperty">
+                    </li>
+                </ul>
+            </div>
+            <div>
+                <ul class="owner-list">
+                    <li v-for="(owner, index) in guarantee.owners" :key="'owner-' + index" class="guarantee-owner-box">
+                        <h4>Propietario #{{ index + 1}}</h4>
+                        <ul class="owner-form">
+                            <li class="first-name third">
+                                <label>Nombre:</label>
+                                <input v-model="owner.owner_first_name" type='text' :placeholder="owner.owner_first_name"/>
+                            </li>
+                            <li class="middle-name third">
+                                <label>Segundo nombre:</label>
+                                <input v-model="owner.owner_middle_name" type='text' :placeholder="owner.owner_middle_name"/>
+                            </li>
+                            <li class="last-name third">
+                                <label>Apellidos:</label>
+                                <input v-model="owner.owner_last_name" type='text' :placeholder="owner.owner_last_name"/>
+                            </li>
+                            <li class="id-type third">
+                                <label>Tipo de documento:</label>
+                                <select v-model="owner.owner_identification_type">
+                                    <option value="cedula_ciudadania">Cédula de ciudadanía</option>
+                                    <option value="cedula_extranjeria">Cédula de extranjería</option>
+                                    <option value="pasaporte">Pasaporte</option>
+                                    <option value="nit">NIT</option>
+                                </select>
+                            </li>
+                            <li class="id-number third">
+                                <label>Número de documento:</label>
+                                <input v-model="owner.owner_identification_number" type='text' :placeholder="owner.owner_identification_number"/>
+                            </li>
+                            <li class="id-place third">
+                                <label>Lugar de expedición:</label>
+                                <input v-model="owner.owner_identification_expedition_place" type='text' :placeholder="owner.owner_identification_expedition_place"/>
+                            </li>
+                            <li class="id-place third">
+                                <label>Fecha de expedición:</label>
+                                <input v-model="owner.owner_identification_issue_date" type='date' :placeholder="owner.owner_identification_issue_date"/>
+                            </li>
+                            <li class="id-place third">
+                                <label>Género:</label>
+                                <select v-model="owner.owner_gender">
+                                    <option>Selecciona una opción</option>
+                                    <option>F</option>
+                                    <option>M</option>
+                                    <option>Otro</option>
+                                </select>
+                            </li>
+                            <br>
+<!--                            <li v-for="documentFile in owner.filesProperty" class=third>-->
+<!--                                <label>{{ documentFile.text }}</label>-->
+<!--                                <input @change="onSelectedDocument(documentFile, $event.target.files)" type="file">-->
+<!--                            </li>-->
+<!--                            <li v-if="index > 0">-->
+<!--                                <button @click="deleteOwner(index)">DELETE</button>&nbsp;-->
+<!--                            </li>-->
+                        </ul>
+                    </li>
+                    <li>
+                        <button @click="addOwner">AÑADIR NUEVO</button>&nbsp;
+                        <button @click="onUpdateOwners">Enviar/guardar</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- FOTOS -->
+    <div id="sureti-single-guarantee-photos" class="sureti-single-guarantee-section" v-if="navTab == 2">
+        <h3>Fotos</h3>
+        <span>+</span>
+
+        <div>
+            <div v-for="(photo, index) in photos">
+                <div>Recuadro de foto</div>
+                <div>
+                    <input @change="onSelectedPhoto(photo, $event.target.files)" type="file">
+                    <div v-if="index > 0">
+                        <button @click="deletePhoto(index)">DELETE</button>&nbsp;
+                    </div>
+                </div>
+            </div>
+            <div v-for="photo in photoDocuments">
+                <document-user :document="photo"></document-user>
+            </div>
+                <button @click="addPhoto">AÑADIR NUEVO</button>&nbsp;
+                <button @click="onUpdatePhoto">Enviar/guardar</button>
+        </div>
+    </div>
+</div>

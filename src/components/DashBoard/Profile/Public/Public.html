@@ -1,0 +1,52 @@
+<div>
+    <div>
+        <div v-for="file in files">
+            <label :for="file.doc_type">
+                {{ file.text }}
+                <input @change="onSelectDocument(file, $event.target.files)" :id="file.doc_type" type="file">
+            </label>
+        </div>
+        <div v-for="document in documents">
+            <document-user :document="document"></document-user>
+        </div>
+        <button :disabled="!verifyFilesSchema" @click="uploadDocumentFiles">Enviar / Guardar</button>
+        <div>
+            <div>
+                <input v-model="publicProfile.first_name" type="text" placeholder="Nombre">
+            </div>
+            <div>
+                <input v-model="publicProfile.middle_name" type="text" placeholder="Segundo nombre">
+            </div>
+            <div>
+                <input v-model="publicProfile.last_name" type="text" placeholder="Apellidos">
+            </div>
+            <div>
+                <select v-model="publicProfile.gender" name="gender" id="user_gender">
+                    <option disabled :value="undefined">Seleccionar Género</option>
+                    <option value="F">F</option>
+                    <option value="M">M</option>
+                    <option value="Otro">Otro</option>
+                </select>
+            </div>
+            <div>
+                <select v-model="publicProfile.identification_type" name="gender" id="identification_type">
+                    <option disabled :value="undefined">Tipo de documento</option>
+                    <option value="cedula_ciudadania">Cédula de ciudadanía</option>
+                    <option value="cedula_extranjeria">Cédula de extranjería</option>
+                    <option value="pasaporte">Pasaporte</option>
+                    <option value="nit">NIT</option>
+                </select>
+            </div>
+            <div>
+                <input v-model="publicProfile.identification_number" type="text" placeholder="Número de coumento">
+            </div>
+            <div>
+                <input v-model="publicProfile.identification_expedition_date" type="date" placeholder="Fecha de expedición">
+            </div>
+            <div>
+                <input v-model="publicProfile.identification_expedition_place" type="text" placeholder="Lugar de expedición">
+            </div>
+        </div>
+    </div>
+    <button :disabled="!verifySchema" @click="onUpdatePublicProfile">Enviar / Guardar</button>
+</div>

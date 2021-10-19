@@ -1,0 +1,26 @@
+<div id="sureti-verify-code">
+	<Form @submit="onVerifySchema">
+		<h3>{{ title }}</h3>
+
+		<div id="body-verify">
+				<p>{{ body }}</p>
+		</div>
+
+		<div>
+<!--			<label class="block text-gray-700 text-sm font-bold mb-2" for="email">-->
+<!--				Código-->
+<!--			</label>-->
+			<input v-model="valueField" ref="fieldValidator" name="activation_code" id="email" type="text" :placeholder="placeHolder"/>
+			<span class="text-red-500 text-xs italic">{{ errorMessage }}</span>
+		</div>
+		<div>
+			<button type="submit">
+				{{ buttonName }}
+			</button>
+			<a id="sureti-request-new-code" v-if="isGenerateCode === 3" @click="validateSchema">
+				Solicitar un nuevo código
+			</a>
+		</div>
+	</Form>
+<!--	<alert></alert>-->
+</div>

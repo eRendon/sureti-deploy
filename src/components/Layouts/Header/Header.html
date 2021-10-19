@@ -1,0 +1,40 @@
+<div id="sureti-top-bar">
+    <div id="sureti-top-bar-container">
+        <!-- LOGO -->
+        <div id="sureti-top-logo" :class="auth.isLoggedIn ? 'logged-in' : ''">
+            <img src="@/assets/img/icons/logo.svg" />
+        </div>
+        <!-- ICON NAVIGATION BAR -->
+        <div id="sureti-icon-bar" v-if="auth.isLoggedIn">
+            <profile></profile>
+            <ul>
+                <li @click="openProfile" class="cursor-pointer">
+                    <a>
+                        <img src="@/assets/img/icons/user-icon.svg" />
+                    </a>
+                </li>
+                <li>
+                    <a>
+                        <img src="@/assets/img/icons/help-icon.svg" />
+                    </a>
+                </li>
+                <li @click="logOut" class="cursor-pointer">
+                    <a>
+                        <img src="@/assets/img/icons/logout-icon.svg" />
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <!-- CONTEXTUAL NAVIGATION BAR -->
+        <nav id="sureti-nav-bar" v-if="auth.isLoggedIn"><!-- IF loggedIn -->
+            <ul>
+                <li @click="onLoadClient" :class="{'current': isBrowsing === 'prestamos'}">
+                    <a >Prestamos</a>
+                </li>
+                <li @click="onLoadInvestment" :class="{'current': isBrowsing === 'inversiones'}">
+                    <a>Inversiones</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>

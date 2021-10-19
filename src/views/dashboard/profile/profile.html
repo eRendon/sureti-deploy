@@ -1,0 +1,26 @@
+<div>
+    <div>
+        <button :class="{'inverse': component.name !== 'PublicProfile'}"
+                @click="onSetComponent('PublicProfile')">
+            Perfil
+        </button>
+        <button :class="{'inverse': component.name !== 'SensitiveProfile'}"
+                @click="onSetComponent('SensitiveProfile')">
+            Información sensible
+        </button>
+        <button :class="{'inverse': component.name !== 'BankInformation'}"
+                @click="onSetComponent('BankInformation')">
+            Información bancaria
+        </button>
+    </div>
+    <h2>Datos de usuario</h2>
+    <component :is="component"></component>
+<!--    <div v-if="isPublicProfile">-->
+<!--&lt;!&ndash;        Component profile information&ndash;&gt;-->
+<!--        <public-profile></public-profile>-->
+<!--    </div>-->
+<!--    <div v-else>-->
+<!--&lt;!&ndash;        Component sensible information&ndash;&gt;-->
+<!--        <sensitive-profile></sensitive-profile>-->
+<!--    </div>-->
+</div>

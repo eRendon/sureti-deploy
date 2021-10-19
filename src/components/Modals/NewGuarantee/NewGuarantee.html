@@ -1,0 +1,46 @@
+<div v-if="showNewGuarantee" class="min-w-screen h-screen animated fadeIn faster  fixed  left-0 top-0 flex justify-center items-center inset-0 z-50 outline-none focus:outline-none bg-no-repeat bg-center bg-cover"  id="modal-id">
+    <div class="absolute bg-black opacity-50 inset-0 z-0"></div>
+    <div class="w-full  max-w-lg p-5 relative mx-auto my-auto rounded-xl shadow-lg  bg-white ">
+        <!--content-->
+        <div class="">
+            <!--body-->
+            <div class="text-center p-5 flex-auto justify-center">
+<!--                <h2 class="text-xl font-bold py-4 ">-->
+<!--                    titulo-->
+<!--                </h2>-->
+                <div @click="onDismissModal">
+                    x
+                </div>
+                <div >
+                    <div >
+                        <component @onRecordGuarantee="onRecordGuarantee"
+                                   :isFirsGuarantee="false"
+                                   :isOnBoarding="false"
+                                   :guarantee_value="Number(valueProperty)"
+                                   :is="component.isComponent">
+                        </component>                    </div>
+
+                </div>
+            </div>
+            <!--footer-->
+<!--            <div class="p-3  mt-2 text-center space-x-4 md:block">-->
+<!--                &lt;!&ndash;				<button&ndash;&gt;-->
+<!--                &lt;!&ndash;				        class="mb-2 md:mb-0 bg-white px-5 py-2 text-sm shadow-sm font-medium tracking-wider border text-gray-600 rounded-full hover:shadow-lg hover:bg-gray-100">&ndash;&gt;-->
+<!--                &lt;!&ndash;					Cancel&ndash;&gt;-->
+<!--                &lt;!&ndash;				</button>&ndash;&gt;-->
+<!--&lt;!&ndash;                <button v-if="!confirmSend && selectedGuarantee.state" @click="confirmSend = true" class="mb-2 md:mb-0 bg-red-500 border border-red-500 px-5 py-2 text-sm shadow-sm font-medium tracking-wider text-white rounded-full hover:shadow-lg hover:bg-red-600">&ndash;&gt;-->
+<!--&lt;!&ndash;                    Enviar pago&ndash;&gt;-->
+<!--&lt;!&ndash;                </button>&ndash;&gt;-->
+<!--&lt;!&ndash;                <div v-if="confirmSend">&ndash;&gt;-->
+<!--&lt;!&ndash;                    <h2>Es correcta la informacion?</h2>&ndash;&gt;-->
+<!--&lt;!&ndash;                    <button @click="confirmSend = false" class="mb-2 md:mb-0 bg-red-500 border border-red-500 px-5 py-2 text-sm shadow-sm font-medium tracking-wider text-white rounded-full hover:shadow-lg hover:bg-red-600">&ndash;&gt;-->
+<!--&lt;!&ndash;                        No&ndash;&gt;-->
+<!--&lt;!&ndash;                    </button>&ndash;&gt;-->
+<!--&lt;!&ndash;                    <button @click="onCreatePayment" class="mb-2 md:mb-0 bg-red-500 border border-red-500 px-5 py-2 text-sm shadow-sm font-medium tracking-wider text-white rounded-full hover:shadow-lg hover:bg-red-600">&ndash;&gt;-->
+<!--&lt;!&ndash;                        Si&ndash;&gt;-->
+<!--&lt;!&ndash;                    </button>&ndash;&gt;-->
+<!--&lt;!&ndash;                </div>&ndash;&gt;-->
+<!--            </div>-->
+        </div>
+    </div>
+</div>
