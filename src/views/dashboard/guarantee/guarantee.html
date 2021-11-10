@@ -37,7 +37,7 @@
                         <p>Su solicitud está en proceso de estudio</p>
                     </div>
                     <div v-if="activeRequest?.amount && createdProposal?.amount" class="guarantee-status-bar">
-                        <p v-if="rejectedProposals">Ha rechazado nuestra propuesta, estamos en proceso de crear otra propuesta.</p>
+                        <p v-if="rejectedProposals?.length > 0">Ha rechazado nuestra propuesta, estamos en proceso de crear otra propuesta.</p>
                         <button @click="openFlowProposal">Revisar propuesta</button>
                     </div>
                     <div v-if="activeRequest?.amount && acceptedProposal?.amount" class="guarantee-status-bar">

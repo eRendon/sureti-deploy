@@ -33,6 +33,7 @@ export default defineComponent({
         }
         loaderStore.actions.loadingOverlay(stateDots).present()
         apiClient.defaults.headers.common['Authorization'] = ''
+        loginForm.user = loginForm.user.toLowerCase()
         const { success, data } = await authRequest.logIn(loginForm)
         if (success) {
           if (data.redirect_to === 'activate') {

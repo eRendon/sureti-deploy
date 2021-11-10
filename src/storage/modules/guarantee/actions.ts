@@ -10,7 +10,7 @@ export default {
     if (success) {
       mutations.setStateGuarantees(data)
     }
-    loaderStore.actions.loadingOverlay().dismiss()
+    // loaderStore.actions.loadingOverlay().dismiss()
   },
   filterSelectedGuarantee (id: string): void {
     const selectedGuarantee = getters.getGuaranteesState().find((guarantee) => {

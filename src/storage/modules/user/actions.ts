@@ -31,7 +31,7 @@ const actions = {
         name: 'Dashboard'
       })
     }
-    loaderStore.actions.loadingOverlay().dismiss()
+    // loaderStore.actions.loadingOverlay().dismiss()
   },
 
   async validateSchemaUserType (profile: IProfile) {

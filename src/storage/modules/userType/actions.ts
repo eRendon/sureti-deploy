@@ -1,4 +1,4 @@
-import { guaranteeStore, investmentStore, loansStore, modalStore, userStorage } from '../../index'
+import { guaranteeStore, investmentStore, loaderStore, loansStore, modalStore, userStorage } from '../../index'
 import { IIndicator } from '@/interfaces/IIndicator'
 import { ITypeUserStore } from '@/interfaces/ITypeUser'
 import mutations from './mutations'
@@ -9,11 +9,12 @@ const actions = {
   async loadFlowClient (): Promise<void> {
     const { total_loans, total_loans_interest, total_interest_payments, total_capital_payments, total_guarantees_credit_limit } = userStorage.getters.getStateProfile()
     this.indicatorsClient(total_loans!, total_loans_interest!, total_interest_payments!, total_capital_payments!, total_guarantees_credit_limit!)
+    await guaranteeStore.actions.getGuarantees()
     await loansStore.actions.getLoans()
     await loansStore.actions.getProposals()
     await loansStore.actions.getRequest()
-    await guaranteeStore.actions.getGuarantees()
     loansStore.mutations.setStateToFilter(true)
+    loaderStore.actions.loadingOverlay().dismiss()
   },
 
   async loadFlowInvestment (): Promise<void> {
