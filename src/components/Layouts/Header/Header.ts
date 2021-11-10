@@ -1,8 +1,9 @@
 import { defineComponent, computed } from 'vue'
-import { userTypeStore, authStorage, modalStore, userStorage } from '../../../storage'
+import { userTypeStore, authStorage, modalStore, userStorage, guaranteeStore, loaderStore } from '../../../storage'
 import Profile from '@/components/DashBoard/SidebarProfile/SidebarProfile.vue'
 import { useRouter } from 'vue-router'
 import router from '@/router'
+import { ILoadingDots } from '@/interfaces/ILoader'
 
 
 export default defineComponent({
@@ -21,8 +22,9 @@ export default defineComponent({
         const profile = computed(() => userStorage.getters.getStateProfile())
 
         const onLoadInvestment = async (): Promise<void> => {
+            guaranteeStore.mutations.setStateGuarantees([])
             userStorage.mutations.setStateBrowser('inversiones')
-            if (profile.value.user_type === 'investor') {
+            if (profile.value.user_type?.includes('investor')) {
                 await router.push({
                     name: 'Dashboard'
                 })
@@ -38,8 +40,16 @@ export default defineComponent({
         }
 
         const onLoadClient = async (): Promise<void> => {
+            guaranteeStore.mutations.setStateGuarantees([])
+            const loadingState = loaderStore.getters.getOverlayModal()
+            if (!loadingState.spinnerDots) {
+                const stateDots: ILoadingDots = {
+                    spinnerDots: true
+                }
+                loaderStore.actions.loadingOverlay(stateDots).present()
+            }
             userStorage.mutations.setStateBrowser('prestamos')
-            if (profile.value.user_type === 'client') {
+            if (profile.value.user_type?.includes('client')) {
                 await router.push({
                     name: 'Dashboard'
                 })

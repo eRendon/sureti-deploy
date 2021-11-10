@@ -1,4 +1,4 @@
-import { IJwtSerialize } from "../interfaces/IJwtSerialize";
+import { IJwtSerialize } from '@/interfaces/IJwtSerialize';
 
 const parseJwt = (token: string): IJwtSerialize => {
   const base64Url = token.split('.')[1];

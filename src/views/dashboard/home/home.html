@@ -7,7 +7,7 @@
     </div>
     <div id="sureti-dashboard-list-column" class="sureti-flex-col" >
         <div id="sureti-dashboard-list-type">
-            <button @click="onSelectComponent('Guarantee')">Ver garantias</button>&nbsp;
+            <button @click="onSelectComponent('Guarantee')">Ver {{ stateBrowser === 'prestamos' ? 'garantías' : 'Inversiones'}}</button>&nbsp;
             <button @click="onSelectComponent('Movements')">Ver movimientos</button>
         </div>
 

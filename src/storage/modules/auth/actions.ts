@@ -15,14 +15,21 @@ const actions = {
   async init(): Promise<void> {
     const auth = localStorage.getItem('auth')
     console.log(auth)
-    const profile = localStorage.getItem('profile')
-    if (profile) {
-      userStorage.mutations.setStateProfile(JSON.parse(profile))
-    }
     if (auth) {
+      mutationAuth.setIsLogged(true)
+      const profile = localStorage.getItem('profile')
+      if (profile) {
+        userStorage.mutations.setStateProfile(JSON.parse(profile))
+      }
+      const loadingState = loaderStore.getters.getOverlayModal()
+      if (!loadingState.spinnerDots) {
+        const stateDots: ILoadingDots = {
+          spinnerDots: true
+        }
+        loaderStore.actions.loadingOverlay(stateDots).present()
+      }
       apiClient.defaults.headers.common['Authorization'] = `Bearer ${JSON.parse(auth).token}`
       mutations.setStateAuth(JSON.parse(auth))
-      mutationAuth.setIsLogged(true)
       await userStorage.actions.getProfile()
       // await guaranteeStore.actions.getGuarantees()
     }

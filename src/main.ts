@@ -12,3 +12,6 @@ import './plugins'
 import { authStorage } from './storage'
 
 app.mount('#app')
+const auth = authStorage.getters.getStateAuth()
+
+authStorage.actions.init()

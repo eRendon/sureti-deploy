@@ -11,8 +11,8 @@
 	<div>
 		<h3>Cuanto estas buscando invertir?</h3>
 		<div>
-			<input type="text" placeholder="$60.000.000">
-			<button>Empecemos</button>
+			<input v-model="investment.amount" type="number" placeholder="$60.000.000">
+			<button @click="onCreateInvestment">Empecemos</button>
 		</div>
 	</div>
 </div>

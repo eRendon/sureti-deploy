@@ -42,6 +42,15 @@ export default defineComponent({
       loaderStore.actions.loadingOverlay(stateDots).present()
       value.mfa_phone = value.mfa_phone ? value.mfa_phone : false
       value.mfa_email = value.mfa_email ? value.mfa_email : false
+      if (!value.mfa_email && !value.mfa_phone) {
+        const alertData: IAlert = {
+          show: true,
+          text: 'Debe seleccionar al menos una de las verificaciones, Email o WhatsApp'
+        }
+        modalStore.actions.alert(alertData).present()
+        loaderStore.actions.loadingOverlay().dismiss()
+        return
+      }
       const { data, success } = await authRequest.register(value)
       if (success) {
         apiClient.defaults.headers.common['Authorization'] = `Bearer ${data.token}`

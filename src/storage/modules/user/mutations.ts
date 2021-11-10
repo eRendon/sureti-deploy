@@ -9,6 +9,9 @@ const mutations = {
   setStateBrowser (stateBrowser: string): void {
     state.isBrowsing = stateBrowser
   },
+  setStateGetMovements (payload: boolean): void {
+    state.toGetMovements = payload
+  }
 }
 
 export default mutations

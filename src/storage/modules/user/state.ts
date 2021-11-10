@@ -3,7 +3,8 @@ import { IUserStore } from '@/interfaces/IUser';
 
 const state = reactive<IUserStore>({
   profile: {},
-  isBrowsing: 'prestamos'
+  isBrowsing: 'prestamos',
+  toGetMovements: false
 })
 
 export default state

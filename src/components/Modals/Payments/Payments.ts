@@ -1,4 +1,4 @@
-import { computed, defineComponent, onMounted, ref } from 'vue'
+import { computed, defineComponent, onMounted, ref, inject } from 'vue'
 import { IGuarantee } from '@/interfaces/IGuarantee'
 import { guaranteeStore, loaderStore, modalStore, userStorage } from '@/storage'
 import GuaranteeList from '@/components/List/Guarantee/Guarantee.vue'
@@ -24,6 +24,7 @@ export default defineComponent({
     const payment = ref<IPayment>({
       amount: 0
     })
+
 
     const route = useRoute()
 
@@ -68,8 +69,17 @@ export default defineComponent({
         const { data, success } = await paymentsRequest.createPayment(payment.value)
         console.log('onCreatePayment', data)
         if (success) {
+          userStorage.mutations.setStateGetMovements(true)
           await uploadPaymentFile(data.payment_id)
+          userStorage.mutations.setStateGetMovements(false)
+          return
         }
+        const alert: IAlert = {
+          text: 'Tuvimos un error procesando su pago, por favor inténtelo más tarde',
+          show: true
+        }
+        modalStore.actions.alert(alert).present()
+        loaderStore.actions.loadingOverlay().dismiss()
       }
     }
 
@@ -89,11 +99,16 @@ export default defineComponent({
           text: 'Sus datos han sido cargados correctamente',
           show: true
         }
-        loaderStore.actions.loadingOverlay().dismiss()
         onDismissModal()
         modalStore.actions.alert(alert).present()
       }
+      loaderStore.actions.loadingOverlay().dismiss()
     }
+
+    const onValidatePayment = computed<boolean>(() => {
+      return !(payment.value.amount! > 0 && payment.value.pay_out_date && file.value);
+
+    })
 
     return {
       payment,
@@ -108,7 +123,8 @@ export default defineComponent({
       onCancelSelected,
       onDismissModal,
       onCreatePayment,
-      onSelectFile
+      onSelectFile,
+      onValidatePayment
     }
   }
 })

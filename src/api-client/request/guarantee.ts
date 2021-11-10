@@ -58,7 +58,6 @@ export default class Guarantee {
     } catch (e) {
       throw e
     } finally {
-
     }
   }
 }

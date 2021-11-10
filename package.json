@@ -6,6 +6,7 @@
     "serve": "vite preview"
   },
   "dependencies": {
+    "@vee-validate/i18n": "^4.5.3",
     "@vee-validate/rules": "^4.5.0-alpha.1",
     "axios": "^0.21.1",
     "vee-validate": "^4.4.6",

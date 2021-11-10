@@ -10,8 +10,12 @@ const router = createRouter({
 router.beforeEach((to, from, next): void => {
 
   const isNewUser = authStorage.getters.getStateIsNewUser()
-
+  const auth = localStorage.getItem('auth')
+  if (auth) {
+    authStorage.mutations.setIsLogged(true)
+  }
   const { isLoggedIn } = authStorage.getters.getStateAuth()
+  console.log('isLoggedIn', isLoggedIn)
   if (to.matched.some(record => record.meta.requiresAuth)) {
     if (!isLoggedIn) {
       next({

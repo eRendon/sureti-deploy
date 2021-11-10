@@ -1,6 +1,6 @@
 <div>
     <header id="sureti-dashboard-list-header">
-        <h2>Garantías</h2>
+        <h2>{{ stateBrowser === 'prestamos' ? 'Garantías' : 'Inversiones'}}</h2>
         <button @click="newGuarantee" v-if="!isToPayment" id="sureti-dashboard-item-add">Añadir +</button>
         <new-guarantee></new-guarantee>
     </header>

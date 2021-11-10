@@ -28,7 +28,6 @@ export default defineComponent({
     const auth = computed(() => authStorage.getters.getStateAuth())
 
     onMounted(async () => {
-      await authStorage.actions.init()
       if (profile.value.user_type === 'home') {
         await userTypeStore.actions.loadFlowClient()
       } else if (profile.value.user_type === 'investment') {

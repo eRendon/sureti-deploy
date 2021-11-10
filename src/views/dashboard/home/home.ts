@@ -3,7 +3,7 @@ import Movements from '../../../components/List/Movements/Movements.vue'
 import GuaranteeList from '../../../components/List/Guarantee/Guarantee.vue'
 import Indicator from '@/components/DashBoard/Indicator/Indicator.vue'
 import { IIndicator } from '@/interfaces/IIndicator'
-import { guaranteeStore, loansStore, userTypeStore } from '@/storage'
+import { guaranteeStore, loansStore, userStorage, userTypeStore } from '@/storage'
 import RequestModal from '@/components/Modals/RequestLoan/RequestLoan.vue'
 
 export default defineComponent({
@@ -32,6 +32,8 @@ export default defineComponent({
       triggerRef(component)
     }
 
+    const stateBrowser = computed(() => userStorage.getters.getStateBrowser())
+
     const guarantees = computed(() => guaranteeStore.getters.getGuaranteesState())
 
     const isNewUser = computed<boolean>(() => {
@@ -55,6 +57,7 @@ export default defineComponent({
       component,
       indicators,
       isNewUser,
+      stateBrowser,
       onSelectComponent
     }
   }

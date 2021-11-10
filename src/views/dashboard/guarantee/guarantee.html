@@ -115,8 +115,11 @@
                         </div>
                     </li>
                     <li class="third">
-                        <label for="houseDeed">Escrituras</label>
-                        <input type="file" id="houseDeed">
+                        <label for="houseDeed">{{  houseDeed.text }}</label>
+                        <input @change="onSelectHouseDeed($event.target.files)" type="file" id="houseDeed">
+                        <div v-for="document in houseDeedDocuments">
+                            <document-user :document="document"></document-user>
+                        </div>
                         <!-- FALTA MOSTRAR LISTA DE DOCUMENTOS YA SUBIDOS -->
                     </li>
                     <li class="third">
@@ -125,16 +128,16 @@
                                 <label>{{ documentFile.text }}</label>
                                 <input @change="onSelectedDocument(documentFile, $event.target.files)" type="file">
                             </div>
-                            <ul>
-                                <li v-if="index > 0">
-                                    <button @click="deleteFileOwnerFront(index)">DELETE</button>&nbsp;
-                                </li>
-                            </ul>
+<!--                            <ul>-->
+<!--                                <li v-if="index > 0">-->
+<!--                                    <button @click="deleteFileOwnerFront(index)">DELETE</button>&nbsp;-->
+<!--                                </li>-->
+<!--                            </ul>-->
                         </ul>
                         <div v-for="propertyFile in propertyDocsFront">
                             <document-user :document="propertyFile"></document-user>
                         </div>
-                        <button @click="addFileOwnerFront">AÑADIR NUEVO</button>&nbsp;
+<!--                        <button @click="addFileOwnerFront">AÑADIR NUEVO</button>&nbsp;-->
                     </li>
                     <li class="third">
                         <ul v-for="(documentFile, index) in filesPropertyBack" >
@@ -142,16 +145,16 @@
                                 <label>{{ documentFile.text }}</label>
                                 <input @change="onSelectedDocument(documentFile, $event.target.files)" type="file">
                             </div>
-                            <ul>
-                                <li v-if="index > 0">
-                                    <button @click="deleteFileOwnerBack(index)">DELETE</button>&nbsp;
-                                </li>
-                            </ul>
+<!--                            <ul>-->
+<!--                                <li v-if="index > 0">-->
+<!--                                    <button @click="deleteFileOwnerBack(index)">DELETE</button>&nbsp;-->
+<!--                                </li>-->
+<!--                            </ul>-->
                         </ul>
                         <div v-for="propertyFile in propertyDocsBack">
                             <document-user :document="propertyFile"></document-user>
                         </div>
-                        <button @click="addFileOwnerBack">AÑADIR NUEVO</button>&nbsp;
+<!--                        <button @click="addFileOwnerBack">AÑADIR NUEVO</button>&nbsp;-->
                     </li>
                 </ul>
             </div>

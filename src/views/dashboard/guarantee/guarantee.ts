@@ -53,6 +53,11 @@ export default defineComponent({
             ]
         }
 
+        const houseDeed = ref<IDocumentFile>({
+            doc_type: 'COPIA DE ESCRITURAS',
+            text: 'Escrituras'
+        })
+
         const filesPropertyFront = ref<IDocumentFile[]>([
             {
                 doc_type: 'CEDULA PROPIETARIO VISTA FRONTAL',
@@ -220,6 +225,10 @@ export default defineComponent({
             guarantee.value.freedomAndTradition!.file = file[0]
         }
 
+        const onSelectHouseDeed = (files: Array<File>): void => {
+            houseDeed.value.file = files[0]
+        }
+
         const onUpdateOwners = async () => {
             const { owners } = guarantee.value
             // const filesProperty: any = []
@@ -308,20 +317,29 @@ export default defineComponent({
                 spinnerDots: true
             }
                 const { propertyTax, freedomAndTradition } = guarantee.value
-                if (propertyTax?.file || freedomAndTradition?.file || filesPropertyBack.value[0].file || filesPropertyFront.value[0].file) {
+                if (propertyTax?.file || freedomAndTradition?.file || filesPropertyBack.value[0].file || filesPropertyFront.value[0].file || houseDeed.value.file) {
                     loaderStore.actions.loadingOverlay(stateDots).present()
                     try {
                         if (propertyTax?.file) {
                             await uploadDocumentFile(propertyTax!)
+                            propertyTax.file = undefined
                         }
                         if (freedomAndTradition?.file) {
                             await uploadDocumentFile(freedomAndTradition!)
+                            freedomAndTradition.file = undefined
                         }
                         if (filesPropertyFront.value[0].file) {
                             await  uploadDocumentFiles(filesPropertyFront.value)
+                            filesPropertyFront.value[0].file = undefined
                         }
                         if (filesPropertyBack.value[0].file) {
                             await  uploadDocumentFiles(filesPropertyBack.value)
+                            filesPropertyBack.value[0].file = undefined
+                        }
+
+                        if(houseDeed.value.file) {
+                            await uploadDocumentFile(houseDeed.value)
+                            houseDeed.value.file = undefined
                         }
                         await getDocuments()
 
@@ -406,6 +424,7 @@ export default defineComponent({
         const photoDocuments = computed(() => documents.value.filter((document) => document.doc_type === 'FOTO'))
         const propertyDocsFront = computed(() => documents.value.filter((document) => document.doc_type === 'CEDULA PROPIETARIO VISTA FRONTAL'))
         const propertyDocsBack = computed(() => documents.value.filter((document) => document.doc_type === 'CEDULA PROPIETARIO VISTA TRASERA'))
+        const houseDeedDocuments = computed(() => documents.value.filter((document) => document.doc_type === 'COPIA DE ESCRITURAS'))
 
         const onCapitalPayment = () => {
             const paymentState: IPaymentModal = {
@@ -447,6 +466,7 @@ export default defineComponent({
             deletePhoto,
             onUpdatePhoto,
             onSelectedPhoto,
+            onSelectHouseDeed,
             guarantee,
             activeLoan,
             activeRequest,
@@ -460,6 +480,8 @@ export default defineComponent({
             propertyDocsFront,
             propertyDocsBack,
             filesPropertyBack,
+            houseDeedDocuments,
+            houseDeed,
             deleteFileOwnerFront,
             addFileOwnerFront,
             deleteFileOwnerBack,

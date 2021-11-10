@@ -79,4 +79,5 @@ export interface IProfile extends IInformation, UserId{
 export interface IUserStore {
   profile?: IProfile
   isBrowsing: string
+  toGetMovements: boolean
 }

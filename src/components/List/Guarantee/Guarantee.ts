@@ -1,6 +1,6 @@
 import { computed, defineComponent, ref, UnwrapRef } from 'vue'
 import { IGuarantee } from '@/interfaces/IGuarantee'
-import { guaranteeStore, modalStore } from '../../../storage'
+import { guaranteeStore, modalStore, userStorage } from '../../../storage'
 import { useRouter } from 'vue-router'
 import NewGuarantee from '@/components/Modals/NewGuarantee/NewGuarantee.vue'
 
@@ -22,6 +22,8 @@ export default defineComponent({
     const detailGuarantee = ref(-1)
 
     const guarantees = computed<IGuarantee[]>(() => guaranteeStore.getters.getGuaranteesState())
+
+    const stateBrowser = computed(() => userStorage.getters.getStateBrowser())
 
     const goToDetail = async (id: UnwrapRef<IGuarantee['guarantee_id']>): Promise<void> => {
       console.log(id)
@@ -49,6 +51,7 @@ export default defineComponent({
     return {
       onDetailGuarantee,
       detailGuarantee,
+      stateBrowser,
       guarantees,
       goToDetail,
       newGuarantee

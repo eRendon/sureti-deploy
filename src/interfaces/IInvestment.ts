@@ -6,5 +6,5 @@ export interface IInvestment extends UserId {
 }
 
 export interface CreditLimit extends UserId {
-  amount: 0,
+  amount?: 0,
 }

@@ -5,6 +5,7 @@ import loaderStore from './modules/loader'
 import userTypeStore from './modules/userType'
 import guaranteeStore from './modules/guarantee'
 import loansStore from './modules/loans'
+import investmentStore from './modules/investment'
 
 export {
     modalStore,
@@ -13,5 +14,6 @@ export {
     loaderStore,
     userTypeStore,
     guaranteeStore,
-    loansStore
+    loansStore,
+    investmentStore
 }

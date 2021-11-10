@@ -1,4 +1,4 @@
-import { computed, defineComponent, onMounted, ref } from 'vue'
+import { computed, defineComponent, onMounted, ref, provide, watch } from 'vue'
 import { paymentsRequest, transactionRequest } from '@/api-client'
 import { ITransaction } from '@/interfaces/ITransaction'
 import { IPayment } from '@/interfaces/IPayment'
@@ -20,6 +20,16 @@ export default defineComponent({
         const movementsPayments = ref<IMovements[]>([])
         const movementsTransfer = ref<IMovements[]>([])
         const showFilter = ref(false)
+
+        const stateToMovements = computed(() => userStorage.getters.getStateToGetMovements())
+
+        watch(()=> stateToMovements.value, (nextState, previewState) => {
+            console.log(previewState)
+            console.log(nextState)
+            if (nextState) {
+                getMovements()
+            }
+        })
 
         const getMovements = async (): Promise<void> => {
             const stateDots: ILoadingDots = {

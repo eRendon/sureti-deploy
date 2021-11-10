@@ -5,6 +5,7 @@ import Guarantee from './request/guarantee'
 import Loan from './request/loan'
 import Payments from './request/payments'
 import Transaction from './request/transaction'
+import Investment from '@/api-client/request/investment'
 
 export const authRequest = new Auth()
 export const fileRequest = new File()
@@ -13,3 +14,4 @@ export const guaranteeRequest = new Guarantee()
 export const loanRequest = new Loan()
 export const paymentsRequest = new Payments()
 export const transactionRequest = new Transaction()
+export const investmentRequest = new Investment()

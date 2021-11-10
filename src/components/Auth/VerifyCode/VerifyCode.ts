@@ -7,6 +7,7 @@ import { loaderStore, modalStore } from '../../../storage';
 import {apiClient} from '@/api-client/axios/config';
 import {IResetCode, IResetToken, ISchema} from '@/interfaces/IAuth';
 import { ILoadingDots } from '@/interfaces/ILoader'
+import { useRoute } from 'vue-router'
 
 defineRule('required', required);
 
@@ -47,6 +48,8 @@ export default defineComponent({
     }
 
     const userTemp = ref('')
+
+    const route = useRoute()
 
     const { value: valueField, resetField, errorMessage } = useField('activation_code', 'required')
 
@@ -102,6 +105,22 @@ export default defineComponent({
       }
     }
 
+    const resendCode = async (): Promise<void> => {
+      const { token } = route.params
+      if (token) {
+        apiClient.defaults.headers.common['Authorization'] = `Bearer ${token}`
+        const { data, success} = await authRequest.getVerifyCode()
+        console.log(data)
+        if (success) {
+          const alertData: IAlert = {
+            show: true,
+            text: 'Se ha enviado un código de verificación'
+          }
+          modalStore.actions.alert(alertData).present()
+        }
+      }
+    }
+
     const onGenerateCode = async (): Promise<void> => {
       const stateDots: ILoadingDots = {
         spinnerDots: true
@@ -147,6 +166,7 @@ export default defineComponent({
 
 
     return {
+      resendCode,
       errorMessage,
       valueField,
       fieldValidator,

@@ -19,6 +19,7 @@ export default defineComponent({
         const documents = ref<IDocument[]>([])
 
         watch(() => profile.value, (profile) => {
+            console.log('watch', profile)
             const {
                 // address,
                 // birth_date,
@@ -53,6 +54,47 @@ export default defineComponent({
                 last_name,
                 middle_name
             }
+        })
+
+        const deconstructProfile = () => {
+            const {
+                // address,
+                // birth_date,
+                // birth_place,
+                // city,
+                // contact_cell_phone,
+                // country,
+                // credit_score,
+                first_name,
+                gender,
+                identification_expedition_date,
+                identification_expedition_place,
+                identification_number,
+                identification_type,
+                last_name,
+                middle_name
+            } : IInformation = profile.value
+            publicProfile.value = {
+                // address,
+                // birth_date,
+                // birth_place,
+                // city,
+                // contact_cell_phone,
+                // country,
+                // credit_score,
+                first_name,
+                gender,
+                identification_expedition_date,
+                identification_expedition_place,
+                identification_number,
+                identification_type,
+                last_name,
+                middle_name
+            }
+        }
+
+        onMounted(() => {
+            deconstructProfile()
         })
 
         const files = ref<IDocumentFile[]>([

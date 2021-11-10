@@ -1,4 +1,4 @@
-import { guaranteeStore, loansStore, modalStore, userStorage } from '../../index'
+import { guaranteeStore, investmentStore, loansStore, modalStore, userStorage } from '../../index'
 import { IIndicator } from '@/interfaces/IIndicator'
 import { ITypeUserStore } from '@/interfaces/ITypeUser'
 import mutations from './mutations'
@@ -6,19 +6,20 @@ import { loanRequest } from '@/api-client'
 import { IPaymentModal } from '@/interfaces/IPayment'
 
 const actions = {
-  async loadFlowClient () {
+  async loadFlowClient (): Promise<void> {
     const { total_loans, total_loans_interest, total_interest_payments, total_capital_payments, total_guarantees_credit_limit } = userStorage.getters.getStateProfile()
     this.indicatorsClient(total_loans!, total_loans_interest!, total_interest_payments!, total_capital_payments!, total_guarantees_credit_limit!)
     await loansStore.actions.getLoans()
     await loansStore.actions.getProposals()
     await loansStore.actions.getRequest()
+    await guaranteeStore.actions.getGuarantees()
     loansStore.mutations.setStateToFilter(true)
-    // await guaranteeStore.actions.getGuarantees()
   },
 
-  loadFlowInvestment () {
+  async loadFlowInvestment (): Promise<void> {
     const { total_investments, total_investment_interests, total_received_interest_payments, total_received_capital_payments } = userStorage.getters.getStateProfile()
     this.indicatorsInvestment(Number(total_investments),Number(total_investment_interests), Number(total_received_interest_payments), Number(total_received_capital_payments) )
+    await investmentStore.actions.getInvestments()
   },
 
   indicatorsClient(total_loans: number, total_loans_interest: number, total_interest_payments: number, total_capital_payments: number, total_guarantees_credit_limit: number) {
@@ -79,16 +80,16 @@ const actions = {
   },
   indicatorsInvestment(total_investments: number, total_investment_interests: number, total_received_interest_payments: number, total_received_capital_payments: number) {
     const indicatorLoan: IIndicator = {
-      title: 'Intereses Pendientes',
-      amount: total_investments + total_investment_interests,
+      title: 'Rendimientos generados',
+      amount: total_investment_interests,
     }
     const indicatorCapital: IIndicator = {
       title: 'Intereses Pendientes',
-      amount: total_received_interest_payments + total_received_capital_payments,
+      amount: total_investment_interests - total_received_interest_payments
     }
     const indicatorQuota: IIndicator = {
-      title: 'Intereses Pendientes',
-      amount: total_investments + total_investment_interests,
+      title: 'Capital invertido',
+      amount: total_investments
     }
     const indicators: IIndicator[] = []
     indicators.push(indicatorLoan)

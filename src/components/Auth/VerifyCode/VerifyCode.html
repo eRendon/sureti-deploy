@@ -17,6 +17,9 @@
 			<button type="submit">
 				{{ buttonName }}
 			</button>
+            <a v-if="isGenerateCode" @click="resendCode" >
+				Reenviar código
+			</a>
 			<a id="sureti-request-new-code" v-if="isGenerateCode === 3" @click="validateSchema">
 				Solicitar un nuevo código
 			</a>
