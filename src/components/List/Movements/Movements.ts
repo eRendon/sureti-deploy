@@ -32,6 +32,8 @@ export default defineComponent({
         })
 
         const getMovements = async (): Promise<void> => {
+            movementsPayments.value = []
+            movementsTransfer.value = []
             const stateDots: ILoadingDots = {
                 spinnerDots: true
             }

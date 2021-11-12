@@ -75,7 +75,14 @@ export default defineComponent({
         modalStore.actions.alert(alertData).present()
         emit('onVerifyCode')
         loaderStore.actions.loadingOverlay().dismiss()
+        return
       }
+      const alertData: IAlert = {
+        show: true,
+        text: 'El código es incorrecto'
+      }
+      modalStore.actions.alert(alertData).present()
+      loaderStore.actions.loadingOverlay().dismiss()
     }
 
 
