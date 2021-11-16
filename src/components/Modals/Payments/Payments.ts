@@ -57,6 +57,11 @@ export default defineComponent({
       file.value = selectedFile[0]
     }
 
+    const cleanPayment = (): void => {
+      onCancelSelected()
+      confirmSend.value = false
+    }
+
     const onCreatePayment = async (): Promise<void> => {
       if (confirmSend.value) {
         const stateDots: ILoadingDots = {
@@ -72,6 +77,7 @@ export default defineComponent({
           userStorage.mutations.setStateGetMovements(true)
           await uploadPaymentFile(data.payment_id)
           userStorage.mutations.setStateGetMovements(false)
+          cleanPayment()
           return
         }
         const alert: IAlert = {

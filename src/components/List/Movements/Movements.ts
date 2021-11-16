@@ -4,6 +4,7 @@ import { ITransaction } from '@/interfaces/ITransaction'
 import { IPayment } from '@/interfaces/IPayment'
 import { loaderStore, userStorage } from '@/storage'
 import { ILoadingDots } from '@/interfaces/ILoader'
+import _ from 'lodash'
 
 interface IMovements extends ITransaction, IPayment {
 }
@@ -68,12 +69,10 @@ export default defineComponent({
                 movementsPayments.value?.push(...payments)
             }
 
+            movementsTransfer.value = _.orderBy(movementsTransfer.value, ['creation_date'], ['asc'])
+            movementsPayments.value = _.orderBy(movementsPayments.value, ['creation_date'], ['asc'])
+
             loaderStore.actions.loadingOverlay().dismiss()
-            console.log('financialTransactions', financialTransactions)
-            console.log('transactions', transactions)
-            console.log('successPayments', successPayments)
-            console.log('payments', payments)
-            console.log('movements', movements)
         }
 
         const movements = computed<IMovements[]>(() => {
