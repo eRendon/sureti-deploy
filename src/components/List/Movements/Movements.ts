@@ -69,8 +69,8 @@ export default defineComponent({
                 movementsPayments.value?.push(...payments)
             }
 
-            movementsTransfer.value = _.orderBy(movementsTransfer.value, ['creation_date'], ['asc'])
-            movementsPayments.value = _.orderBy(movementsPayments.value, ['creation_date'], ['asc'])
+            movementsTransfer.value = _.orderBy(movementsTransfer.value, ['creation_date'], ['desc'])
+            movementsPayments.value = _.orderBy(movementsPayments.value, ['creation_date'], ['desc'])
 
             loaderStore.actions.loadingOverlay().dismiss()
         }
