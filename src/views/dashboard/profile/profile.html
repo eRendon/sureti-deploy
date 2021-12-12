@@ -1,19 +1,19 @@
 <div>
-    <div>
+    <h2>Perfil de usuario</h2>
+    <div class="sureti-profile-sections">
         <button :class="{'inverse': component.name !== 'PublicProfile'}"
                 @click="onSetComponent('PublicProfile')">
-            Perfil
-        </button>
+            Datos generales y documentos
+        </button>&nbsp;
         <button :class="{'inverse': component.name !== 'SensitiveProfile'}"
                 @click="onSetComponent('SensitiveProfile')">
-            Información sensible
-        </button>
+            Datos de acceso
+        </button>&nbsp;
         <button :class="{'inverse': component.name !== 'BankInformation'}"
                 @click="onSetComponent('BankInformation')">
             Información bancaria
         </button>
     </div>
-    <h2>Datos de usuario</h2>
     <component :is="component"></component>
 <!--    <div v-if="isPublicProfile">-->
 <!--&lt;!&ndash;        Component profile information&ndash;&gt;-->

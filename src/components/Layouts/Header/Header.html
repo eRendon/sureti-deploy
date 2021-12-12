@@ -3,6 +3,7 @@
         <!-- LOGO -->
         <div id="sureti-top-logo" :class="auth.isLoggedIn ? 'logged-in' : ''">
             <img src="@/assets/img/icons/logo.svg" />
+            <span id="sureti-logo-beta">(BETA)</span>
         </div>
         <!-- ICON NAVIGATION BAR -->
         <div id="sureti-icon-bar" v-if="auth.isLoggedIn">
@@ -14,9 +15,9 @@
                     </a>
                 </li>
                 <li>
-                    <a>
+                    <router-link to="/help">
                         <img src="@/assets/img/icons/help-icon.svg" />
-                    </a>
+                    </router-link >
                 </li>
                 <li @click="logOut" class="cursor-pointer">
                     <a>

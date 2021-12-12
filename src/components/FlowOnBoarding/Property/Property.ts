@@ -8,7 +8,11 @@ export default defineComponent({
     isOnBoarding: {
       type: Boolean,
       default: true
-    }
+    },
+    user_type: {
+      type: String,
+      default: ''
+    },
   },
   setup (props, { emit }) {
 

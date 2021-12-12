@@ -7,6 +7,10 @@ import guaranteeStore from './modules/guarantee'
 import loansStore from './modules/loans'
 import investmentStore from './modules/investment'
 
+/**
+ * The module export centralized modules of store
+ */
+
 export {
     modalStore,
     authStorage,

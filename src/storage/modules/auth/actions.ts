@@ -1,18 +1,41 @@
 import mutations from './mutations'
 import {ILoginResponse} from '@/interfaces/IAuth';
-import { guaranteeStore, loaderStore, userStorage } from '../../index'
+import { loaderStore, userStorage } from '../../index'
 import mutationAuth from './mutations'
 import { apiClient } from '@/api-client/axios/config'
 import { authRequest } from '@/api-client'
 import router from '@/router'
 import { ILoadingDots } from '@/interfaces/ILoader'
 
+/**
+ * ToDo Actions Module Auth
+ */
+
 const actions = {
+
+  /**
+   * @param auth
+   * @type ILoginResponse
+   * @return void
+   * Set the auth state and localStore to persist data
+   */
+
   stateAuth(auth: ILoginResponse): void {
     localStorage.setItem('auth', JSON.stringify(auth))
     mutations.setStateAuth(auth)
   },
+
+  /**
+   ToDo Init Data Sureti
+   * When refresh page. This get the state browser (name tab navigation), auth user and get profile user and set authorization
+   * bearer token to headers axios
+   * @return void
+   */
   async init(): Promise<void> {
+    const stateBrowser = localStorage.getItem('stateBrowser')
+    if(stateBrowser) {
+      userStorage.mutations.setStateBrowser(stateBrowser)
+    }
     const auth = localStorage.getItem('auth')
     console.log(auth)
     if (auth) {
@@ -34,12 +57,19 @@ const actions = {
       // await guaranteeStore.actions.getGuarantees()
     }
   },
+
+  /**
+   ToDo LogOut user
+   * log out function user, and clear all data in localStore
+   * @return Promise<void>
+   */
+
   async logOut(): Promise<void> {
     const stateDots: ILoadingDots = {
       spinnerDots: true
     }
     loaderStore.actions.loadingOverlay(stateDots).present()
-    const { data, success } = await authRequest.logOut()
+    const { success } = await authRequest.logOut()
     const stateAuth: ILoginResponse = {
       redirect_to: '',
       token: '',

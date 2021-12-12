@@ -236,23 +236,127 @@ ul {
 }
 
 /* GUARANTEE STATS */
-.sureti-guarantee-list-stat {
+.sureti-guarantee-list-stat,
+.sureti-investment-list-stat {
   padding: 5px 25px 5px 0;
   margin:0;
   display:inline-block;
   vertical-align:top;
 }
-.sureti-guarantee-list-stat span.stat-label {
+.sureti-guarantee-list-stat span.stat-label,
+.sureti-investment-list-stat span.stat-label {
   color: #5747D7;
   text-transform:uppercase;
   font-weight:500;
   font-size:12px;
   display:block;
 }
-.sureti-guarantee-list-stat span.stat-value {
+.sureti-guarantee-list-stat span.stat-value,
+.sureti-investment-list-stat span.stat-value {
   color: #333;
   text-transform:uppercase;
   font-weight:800;
   font-size:20px;
   display:block;
+}
+
+.sureti-movement-modal {
+  width:100vw;
+  height:100vh;
+  padding: 10px 0;
+  position: fixed;
+  top:0;
+  left:0;
+}
+.sureti-movement-modal-body {
+  position:relative;
+}
+.sureti-movement-modal-close {
+  position:fixed;
+  width:35px;
+  top: 15px;
+  right: 10px;
+  color:#fff;
+  padding:3px;
+  line-height:10px;
+  font-size:14px;
+  border-radius:8px;
+  transform: rotate(45deg);
+  cursor:pointer;
+  background-color:#fff;
+  transition: background-color 0.15s ease-in-out;
+  border-radius:30px;
+}
+.sureti-movement-modal-close:hover {
+  background-color:#ddd;
+}
+
+.sureti-sensitive-update-code {
+  border:solid 1px #ddd;
+  padding: 20px;
+  max-width: 430px;
+  border-radius:10px;
+}
+.sureti-sensitive-update-code input {
+  display:block;
+  margin: 10px 0 15px;
+}
+
+@media all and (min-width: 640px) {
+  .sureti-movement-modal-close {
+    position:fixed;
+    width:35px;
+    top: 18px;
+    right: calc(50% - 308px);
+  }
+}
+
+.sureti-onboarding-h2 {
+  font-size:30px;
+  line-height:35px;
+  margin: 10px 0 20px;
+}
+
+.sureti-modal-title {
+  padding: 20px 0 15px;
+}
+.sureti-modal-selected-guarantee {
+  padding: 15px;
+  box-shadow: 0px 1px 18px rgba(0,0,0,0.07), 0px 1px 8px rgba(0,0,0,0.08), 0px 1px 2px rgba(0,0,0,0.05);
+  border-radius:10px;
+}
+.sureti-modal-selected-guarantee button {
+  margin-top:10px;
+}
+.sureti-modal-transaction-box {
+  padding: 10px 5px 25px;
+}
+.sureti-modal-transaction-box label {
+  font-size: 13px;
+  padding-top:15px;
+}
+
+/* SELECTED GUARANTEE IN MODALS */
+.sureti-modal-selected-guarantee-title {
+  line-height:20px;
+  padding-bottom: 10px;
+  border-bottom:solid 1px #ddd;
+}
+.sureti-modal-selected-guarantee-title .property-address {
+  font-size: 18px;
+}
+.sureti-modal-selected-guarantee-title .property-location {
+  font-size: 13px;
+  font-weight:300;
+}
+.guarantee-debt-label {
+  color:#5747D7;
+  font-weight:500;
+  line-height:12px;
+}
+.guarantee-debt-amount {
+  color:#333;
+  font-size:20px;
+  font-weight:600;
+  line-height:12px;
 }

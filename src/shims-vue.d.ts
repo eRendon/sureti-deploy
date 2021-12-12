@@ -4,3 +4,19 @@ declare module '*.vue' {
   const component: DefineComponent<{}, {}, any>
   export default component
 }
+
+declare module 'simple-mask-money' {
+  interface Arg {
+    allowNegative: boolean,
+    negativeSignAfter: boolean,
+    prefix: string,
+    suffix: string,
+    fixed: boolean,
+    fractionDigits: number,
+    decimalSeparator: string,
+    thousandsSeparator: string,
+    cursor: string
+  }
+  function setMask(inputId: string, args: Arg): void
+  function formatToNumber(value: string | number): void
+}

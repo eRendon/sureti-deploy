@@ -1,6 +1,6 @@
 <div id="sureti-auth-panel">
-<!--	<alert></alert>-->
 	<h2 class="text-center">INICIA SESIÓN</h2>
+<!--    Form login user-->
 	<Form @submit="onLogin" :validation-schema="schema" v-slot="{ errors }" id="sureti-login-form">
 		<div class="mb-4">
 			<label class="text-center hide">
@@ -22,6 +22,7 @@
 			</button>
 		</div>
 	</Form>
+<!--    card to register user-->
 	<div class="sureti-login-links">
 		<div class="login-link-box">
 			<h4>No tienes cuenta aún?</h4>
@@ -32,6 +33,7 @@
 				</button>
 			</router-link>
 		</div>
+<!--        card to recovery password user-->
 		<div class="login-link-box">
 			<h4>Olvidaste tu contraseña?</h4>
 			<p>No hay problema, te ayudamos a recuperar el acceso a tu cuenta.</p>

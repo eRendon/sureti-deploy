@@ -48,11 +48,28 @@
         vertical-align:middle;
         padding:10px 10px 10px 0;
         text-align:center;
+        position:relative;
     }
     #sureti-top-logo img{
         padding-top:5px;
         height:55px;
         display:inline-block;
+    }
+    #sureti-top-logo #sureti-logo-beta {
+        position: absolute;
+        top:60px;
+        right:47px;
+        color:#ccc;
+        font-size:7px;
+    }
+    @media all and (min-width: 768px) {
+        #sureti-top-logo #sureti-logo-beta {
+            position: absolute;
+            top:57px;
+            right:57px;
+            color:#ccc;
+            font-size:7px;
+        }
     }
     #sureti-icon-bar {
         display:inline-block;

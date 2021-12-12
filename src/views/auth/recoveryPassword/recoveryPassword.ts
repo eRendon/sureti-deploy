@@ -17,7 +17,14 @@ export default defineComponent({
     const setNewPassword = ref<boolean>(false)
     const body = ref<string>('Ingresa tu email o número de celular')
 
-    const onGenerateCode = () => {
+    /**
+     ToDo GenerateCode
+     * Generate code when user is recovery password, set isGenerate code = 3
+     * to reset token function in VerifyCode component, this include verifySchema function
+     * @return void
+     */
+
+    const onGenerateCode = (): void => {
       console.log(refVerifyCode)
       isGenerateCode.value = 3
       buttonName.value = 'Verificar'
@@ -25,7 +32,12 @@ export default defineComponent({
       body.value = 'Ingresa el código de verificación'
     }
 
-    const onResetToken = () => {
+    /**
+     ToDo Set New password
+     * validation to see component new password when code verification is generated an validated
+     */
+
+    const onResetToken = (): void => {
       setNewPassword.value = true
     }
 

@@ -15,7 +15,7 @@ export default defineComponent({
 
         const movementFilter = ref<ITransaction & IPayment>({})
         const paymentsFilter = ref<IPayment>({})
-        const isPayments = ref(true)
+        const isPayments = ref(false)
         const profile = computed(() => userStorage.getters.getStateProfile())
         const isDetailMovement = ref(-1)
         const movementsPayments = ref<IMovements[]>([])
@@ -45,29 +45,35 @@ export default defineComponent({
                 data: financialTransactions,
                 success: successFinancial
             } = await transactionRequest.financialTransactions(movementFilter.value)
-            if (successFinancial) {
-                movementsTransfer.value?.push(...financialTransactions.filter((transaction) => {
-                    if (transaction.transaction_type === 'loan_disbursement') {
-                        return transaction
-                    }
-                }))
-            }
             const {
                 data: transactions,
                 success: successTransactions
             } = await transactionRequest.transactions(movementFilter.value)
-            if (successTransactions) {
-                movementsTransfer.value?.push(...transactions.filter((transaction) => {
-                    if (transaction.transaction_type !== 'create_guarantee_request' && transaction.transaction_type !== 'payment request') {
-                        return transaction
-                    }
-                }))
-            }
-
             const { data: payments, success: successPayments } = await paymentsRequest.payments(paymentsFilter.value)
-            if (successPayments) {
-                movementsPayments.value?.push(...payments)
-            }
+            validateMovementsUser(financialTransactions, payments, transactions)
+            // if (successFinancial) {
+            //     movementsTransfer.value?.push(...financialTransactions.filter((transaction) => {
+            //         if (transaction.transaction_type === 'loan_disbursement') {
+            //             return transaction
+            //         }
+            //     }))
+            // }
+            // const {
+            //     data: transactions,
+            //     success: successTransactions
+            // } = await transactionRequest.transactions(movementFilter.value)
+            // if (successTransactions) {
+            //     movementsTransfer.value?.push(...transactions.filter((transaction) => {
+            //         if (transaction.transaction_type !== 'create_guarantee_request' && transaction.transaction_type !== 'payment request') {
+            //             return transaction
+            //         }
+            //     }))
+            // }
+
+            // const { data: payments, success: successPayments } = await paymentsRequest.payments(paymentsFilter.value)
+            // if (successPayments) {
+            //     movementsPayments.value?.push(...payments)
+            // }
 
             movementsTransfer.value = _.orderBy(movementsTransfer.value, ['creation_date'], ['desc'])
             movementsPayments.value = _.orderBy(movementsPayments.value, ['creation_date'], ['desc'])
@@ -75,9 +81,37 @@ export default defineComponent({
             loaderStore.actions.loadingOverlay().dismiss()
         }
 
+        const movementsInvestor = ref<IMovements[]>([])
+
+        const validateMovementsUser = (movements: IMovements[], payments: IMovements[], transactions: IMovements[]) => {
+            if (profile.value.user_type === 'client') {
+                movementsTransfer.value?.push(...movements.filter((transaction) => {
+                    if (transaction.transaction_type === 'loan_disbursement') {
+                        return transaction
+                    }
+                }))
+                movementsTransfer.value?.push(...transactions.filter((transaction) => {
+                    if (transaction.transaction_type !== 'create_guarantee_request' && transaction.transaction_type !== 'payment request') {
+                        return transaction
+                    }
+                }))
+                movementsPayments.value?.push(...payments)
+                return
+            }
+            movementsInvestor.value.push(...movements.filter((movement) => {
+                if (movement.transaction_type === 'investment_disbursement' || movement.transaction_type === 'investment_cash_out_disbursement' ||
+                movement.transaction_type === 'capital_payment_transaction' || movement.transaction_type === 'interest_payment_transaction' || movement.transaction_type === 'investment_interest_cash_out_transaction') {
+                    return movement
+                }
+            }))
+            // movementsInvestor.value.push(...transactions.filter((transaction) => {
+            //
+            // }))
+        }
+
         const movements = computed<IMovements[]>(() => {
-            if (isPayments.value) {
-                return movementsPayments.value
+            if (!isPayments.value) {
+                return movementsPayments.value.length > 0 ? movementsPayments.value : movementsInvestor.value
             }
             return movementsTransfer.value
         })
@@ -88,9 +122,11 @@ export default defineComponent({
 
         return {
             movements,
+            movementsInvestor,
             isDetailMovement,
             showFilter,
-            isPayments
+            isPayments,
+            profile
         }
     }
 })

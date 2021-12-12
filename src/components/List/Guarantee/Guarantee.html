@@ -1,7 +1,7 @@
 <div>
-    <header id="sureti-dashboard-list-header">
+    <header id="sureti-dashboard-list-header" v-if="!isToPayment">
         <h2>{{ stateBrowser === 'prestamos' ? 'Garantías' : 'Inversiones'}}</h2>
-        <button @click="newGuarantee" v-if="!isToPayment" id="sureti-dashboard-item-add">Añadir +</button>
+        <button @click="newGuarantee" id="sureti-dashboard-item-add">Añadir +</button>
         <new-guarantee></new-guarantee>
     </header>
 	<div class="sureti-guarantee-list-box" @click="onDetailGuarantee(index, guarantee)" v-for="(guarantee, index) in guarantees">

@@ -31,6 +31,7 @@ export default defineComponent({
 
         const dismissModal = (): void => {
             modalStore.actions.requestModal({}, false)
+            onCancelSelected()
         }
 
         const createRequest = async () => {
@@ -67,7 +68,15 @@ export default defineComponent({
         }
         const onCancelSelected = (): void => {
             requestLoan.value.amount = 0
-            guaranteeStore.mutations.setSelectedGuarantee({})
+            if (!getIdParams()) {
+                guaranteeStore.mutations.setSelectedGuarantee({})
+            }
+        }
+
+        const getIdParams = (): boolean => {
+            const { id } = route.params
+            console.log('guarantee_id_params', id)
+            return !!id;
         }
 
         return {

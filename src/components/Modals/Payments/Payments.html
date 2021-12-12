@@ -1,62 +1,53 @@
-<div v-if="statePayments.show" class="min-w-screen h-screen animated fadeIn faster  fixed  left-0 top-0 flex justify-center items-center inset-0 z-50 outline-none focus:outline-none bg-no-repeat bg-center bg-cover"  id="modal-id">
-	<div class="absolute bg-black opacity-50 inset-0 z-0"></div>
-	<div class="w-full  max-w-lg p-5 relative mx-auto my-auto rounded-xl shadow-lg  bg-white ">
-		<!--content-->
-		<div class="">
-			<!--body-->
-			<div class="text-center p-5 flex-auto justify-center">
-				<h2 class="text-xl font-bold py-4 ">
-					{{ statePayments.title }}
-				</h2>
-				<div @click="onDismissModal">
-					x
-				</div>
-				<div v-if="!selectedGuarantee.state" class="overflow-auto h-80">
-					<guarantee-list :isToPayment="true"/>
-				</div>
-				<div v-else>
-					<div class="flex">
-						<div>
-							Garantia seleccionada
-						</div>
-						<div v-if="!guarantee_id_params" @click="onCancelSelected" style="width: 25px;">
-							x
-						</div>
-                        <div>
-                            <span>{{ selectedGuarantee.real_estate_city }}</span>
-                            <span>{{ selectedGuarantee.real_estate_address }}</span>
-                            <span>{{ selectedGuarantee.real_estate_country }}</span>
-                        </div>
-					</div>
+<modal-layout :showModal="statePayments.show" @onDismissModal="onDismissModal">
+    <div>
+        <h2 class="sureti-modal-title">
+            {{ statePayments.title }}
+        </h2>
+        <div v-if="!selectedGuarantee.state">
+            <p>Selecciona la garantía sobre la que deseas hacer el pago</p>
+            <guarantee-list :isToPayment="true"/>
+        </div>
+        <div v-else>
+            <div class="sureti-modal-selected-guarantee">
+                <h3 class="sureti-modal-selected-guarantee-title">
+                    <span class="property-address">{{ selectedGuarantee.real_estate_address }}</span><br>
+                    <span class="property-location">{{ selectedGuarantee.real_estate_city }}, {{ selectedGuarantee.real_estate_country }}</span>
+                </h3>
+                <ul>
+                    <li class="half">
+                        <p class="guarantee-debt-label">{{ statePayments.isCapitalPayment ? 'Capital en deuda' : 'Intereses Pendientes'}}:</p><p class="guarantee-debt-amount"> {{$filters.formatCurrency(statePayments.isCapitalPayment ? parseInt(totalCapitalDebt) : parseInt(totalInterestDebt))}}</p>
+                    </li>
+                    <li class="half">
+                        <button v-if="!guarantee_id_params" @click="onCancelSelected" class="inverse">
+                            Cambiar garantía
+                        </button>
+                    </li>
+                </ul>
+            </div>
 
-				<div>
-					<span>{{ statePayments.isCapitalPayment ? 'Capital en deuda' : 'Intereses Pendientes'}}: {{$filters.formatCurrency(statePayments.isCapitalPayment ? totalCapitalDebt : totalInterestDebt)}}</span>
-
-					<h2>Cuanto consignaste?</h2>
-					<input :disabled="confirmSend" type="text" v-model="payment.amount">
-					<h2>Cuando consignaste?</h2>
-					<input :disabled="confirmSend"  type="date" v-model="payment.pay_out_date">
-					<h2>Comprobante de la transaccion</h2>
-					<input :disabled="confirmSend"  type="file" @change="onSelectFile($event.target.files)">
-				</div>
-				</div>
-			</div>
-			<!--footer-->
-			<div class="p-3  mt-2 text-center space-x-4 md:block">
-				<button :disabled="onValidatePayment" v-if="!confirmSend && selectedGuarantee.state" @click="confirmSend = true" class="mb-2 md:mb-0 bg-red-500 border border-red-500 px-5 py-2 text-sm shadow-sm font-medium tracking-wider text-white rounded-full hover:shadow-lg hover:bg-red-600">
-					Enviar pago
-				</button>
-				<div v-if="confirmSend">
-					<h2>Es correcta la informacion?</h2>
-					<button @click="confirmSend = false" class="mb-2 md:mb-0 bg-red-500 border border-red-500 px-5 py-2 text-sm shadow-sm font-medium tracking-wider text-white rounded-full hover:shadow-lg hover:bg-red-600">
-						No
-					</button>
-					<button @click="onCreatePayment" class="mb-2 md:mb-0 bg-red-500 border border-red-500 px-5 py-2 text-sm shadow-sm font-medium tracking-wider text-white rounded-full hover:shadow-lg hover:bg-red-600">
-						Si
-					</button>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
-
+            <div class="sureti-modal-transaction-box">
+                <label>Cuanto consignaste? ({{$filters.formatCurrency(payment.amount)}})</label>
+                <input :disabled="confirmSend" type="number" v-model="payment.amount">
+                <label>Fecha de consignación:</label>
+                <input :disabled="confirmSend"  type="date" v-model="payment.pay_out_date">
+                <label>Comprobante de la transaccion:</label>
+                <input :disabled="confirmSend"  type="file" @change="onSelectFile($event.target.files)">
+            </div>
+        </div>
+    </div>
+    <!--footer-->
+    <div>
+        <button :disabled="onValidatePayment" v-if="!confirmSend && selectedGuarantee.state" @click="confirmSend = true">
+            Enviar pago
+        </button>
+        <div v-if="confirmSend">
+            <h2>Es correcta la informacion?</h2>
+            <button @click="onCreatePayment">
+                Si
+            </button>
+            <button @click="confirmSend = false" class="inverse">
+                No
+            </button>
+        </div>
+    </div>
+</modal-layout>

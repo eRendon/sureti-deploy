@@ -1,5 +1,5 @@
 import { investmentRequest } from '@/api-client'
-import { guaranteeStore } from '@/storage'
+import { investmentStore, loaderStore } from '@/storage'
 
 
 const actions = {
@@ -7,8 +7,9 @@ const actions = {
         const { data, success } = await investmentRequest.investment()
         console.log('getInvestments', data)
         if (success) {
-            guaranteeStore.mutations.setStateGuarantees(data)
+            investmentStore.mutations.setInvestments(data)
         }
+        loaderStore.actions.loadingOverlay().dismiss()
     }
 }
 

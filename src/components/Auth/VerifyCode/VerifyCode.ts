@@ -38,7 +38,7 @@ export default defineComponent({
     },
     body: {
       type: String,
-      default: ''
+      default: 'Por favor ingrese el código que recibió a su email o teléfono.'
     }
   },
   setup(props, { emit }) {
@@ -65,7 +65,7 @@ export default defineComponent({
       const schema: ISchema = {
         activation_code: valueField.value as string
       }
-      const { data, success } = await authRequest.verifyCode(schema)
+      const { success } = await authRequest.verifyCode(schema)
       if (success) {
         apiClient.defaults.headers.common['Authorization'] = ''
         const alertData: IAlert = {
@@ -112,6 +112,12 @@ export default defineComponent({
       }
     }
 
+    /**
+     ToDo Resend Code
+     * Resend code whit token, the token is add to params route after route navigation
+     * @return Promise<void>
+     */
+
     const resendCode = async (): Promise<void> => {
       const { token } = route.params
       if (token) {
@@ -127,6 +133,12 @@ export default defineComponent({
         }
       }
     }
+
+    /**
+     ToDo Generate Code
+     * Generate de code to verify account user
+     * @return Promise<void>
+     */
 
     const onGenerateCode = async (): Promise<void> => {
       const stateDots: ILoadingDots = {
@@ -151,6 +163,12 @@ export default defineComponent({
       }
     }
 
+    /**
+     ToDo Verify Schema
+     * Verify Schema when the need generate new code to verification user
+     * This component need to refactoring code
+     * @return Promise<void>
+     */
 
     const onVerifySchema = async (): Promise<void> => {
       userTemp.value = valueField.value as string
@@ -163,6 +181,12 @@ export default defineComponent({
       }
       await resetToken()
     }
+
+    /**
+     ToDo Validate Schema
+     * Validation schema when user is recovery password
+     * @return Promise<void>
+     */
 
     const validateSchema = async (): Promise<void> => {
       if (props.isGenerateCode === 3) {

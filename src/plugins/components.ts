@@ -9,6 +9,8 @@ import Overlay from '../components/Loaders/Overlay/Overlay.vue'
 import RequestLoan from '@/components/Modals/RequestLoan/RequestLoan.vue'
 import Payments from '@/components/Modals/Payments/Payments.vue'
 import Document from '@/components/Document/Document.vue'
+import ModalLayout from '@/components/Layouts/Modal/Modal.vue'
+
 /*
 ToDo Id-Component
 */
@@ -18,3 +20,4 @@ app.component('loading-overlay', Overlay)
 app.component('request-loan', RequestLoan)
 app.component('payments-modal', Payments)
 app.component('document-user', Document)
+app.component('modal-layout', ModalLayout)

@@ -20,17 +20,19 @@
     width:100%;
     display:inline-block;
     vertical-align:middle;
-    max-width:320px;
+    width:300px;
     background-color:#fff;
-    border-radius: 10px;
+    border-radius: 8px;
     box-shadow: 0 0 22px rgba(0,0,0,0.3);
-    padding: 45px 15px 15px;
+    padding: 35px 15px 15px;
     margin:0 auto;
-    position:relative;
+    position:fixed;
+    top:calc(50vh - 80px);
+    left: calc(50vw - 150px);
     z-index:50001;
 }
 .sureti-alert-pill .sureti-alert-pill-close {
-    padding: 4px 4px 3px;
+    padding: 2px 2px 1px;
     width:auto;
     min-width:0;
     position:absolute;
@@ -42,13 +44,16 @@
 .sureti-alert-pill .sureti-alert-pill-icon {
     padding: 4px;
     color:#000;
-    width:20px;
-    height:20px;
+    width:18px;
+    height:18px;
     min-width:0;
     position:absolute;
     top:3px;
     left:3px;
     font-size:22px;
     line-height:15px;
+}
+.sureti-alert-pill p {
+    margin:0;
 }
 </style>

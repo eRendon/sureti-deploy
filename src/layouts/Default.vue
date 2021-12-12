@@ -7,11 +7,13 @@
     <loading-overlay></loading-overlay>
     <alert></alert>
     <payments-modal></payments-modal>
+    <RequestModal></RequestModal>
   </div>
 </template>
 
 <script lang="ts">
 import Header from '../components/Layouts/Header/Header.vue'
+import RequestModal from '@/components/Modals/RequestLoan/RequestLoan.vue'
 
 import { computed, defineComponent, onMounted } from 'vue'
 import { authStorage, userStorage, userTypeStore } from '../storage'
@@ -19,7 +21,8 @@ import { authStorage, userStorage, userTypeStore } from '../storage'
 export default defineComponent({
   name: 'DefaultLayout',
   components: {
-    'SHeader': Header
+    'SHeader': Header,
+    RequestModal
   },
   setup () {
 
@@ -31,7 +34,7 @@ export default defineComponent({
       if (profile.value.user_type === 'home') {
         await userTypeStore.actions.loadFlowClient()
       } else if (profile.value.user_type === 'investment') {
-        userTypeStore.actions.loadFlowInvestment()
+        await userTypeStore.actions.loadFlowInvestment()
       }
     })
 

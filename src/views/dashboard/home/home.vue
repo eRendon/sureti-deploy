@@ -4,7 +4,7 @@
 
 <style>
 #sureti-dashboard-stats-column {
-    padding: 0 30px 0 0;
+    padding-top:20px;
     flex:1;
 }
 .sureti-dashboard-stat {
@@ -30,20 +30,30 @@
 }
 
 #sureti-dashboard-list-column {
-    padding: 0 10px;
+    padding: 0;
     flex:2;
 }
 #sureti-dashboard-list-type {
-    padding-bottom:15px;
+    padding:15px 0;
     margin-bottom:10px;
     border-bottom: solid 1px #ddd;
 }
-@media all and (min-width: 900px) {
+@media all and (max-width:460px) {
+    #sureti-dashboard-list-type button {
+        font-size: 13px;
+    }
+}
+@media all and (min-width: 768px) {
     #sureti-dashboard-stats-column {
-        flex:1;
+        padding: 0 30px 0 0;
+        flex:1.6;
+        max-width: 265px;
     }
     #sureti-dashboard-list-column {
         flex:3;
+    }
+    #sureti-dashboard-list-type {
+        padding: 0 0 15px;
     }
 }
 </style>

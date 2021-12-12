@@ -27,7 +27,16 @@ router.beforeEach((to, from, next): void => {
           name: 'OnBoarding'
         })
       } else {
-        next()
+        if (to.name === 'OnBoarding') {
+          next({
+            name: 'Dashboard'
+          })
+        } else {
+          next()
+        }
+        console.log('isNewUser', isNewUser)
+        console.log('to', to)
+        console.log('from', from)
       }
     }
   } else {

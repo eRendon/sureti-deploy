@@ -22,7 +22,7 @@ input::placeholder {
     color:#777;
 }
 #sureti-auth-panel {
-    padding: 20px 20px 80px;
+    padding: 20px 0px 80px;
     margin:0 auto;
 }
 #sureti-login-form {
@@ -45,7 +45,7 @@ input::placeholder {
     z-index: 1;
     position:relative;
     box-shadow: 0px 1px 1px rgba(0,0,0,0.15);
-    max-width:320px;
+    max-width:360px;
     display:inline-block;
 }
 .login-link-box h4 {}

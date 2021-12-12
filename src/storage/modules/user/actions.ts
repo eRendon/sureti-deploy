@@ -23,7 +23,14 @@ const actions = {
       loaderStore.actions.loadingOverlay().dismiss()
       return
     }
+    const stateBrowser = userStorage.getters.getStateBrowser()
     // await guaranteeStore.actions.getGuarantees()
+    console.log('stateBrowser', stateBrowser)
+    if (profile.user_type === 'investor' && !stateBrowser) {
+      userStorage.mutations.setStateBrowser('inversiones')
+    } else if (profile.user_type === 'client' && !stateBrowser){
+      userStorage.mutations.setStateBrowser('prestamos')
+    }
     await this.validateSchemaUserType(profile)
     // profile.user_type === 'client' ? await userTypeStore.actions.loadFlowClient() : await userTypeStore.actions.loadFlowInvestment()
     if (router.options.history.state.back === '/login' || router.currentRoute.value.name === 'Login') {
@@ -38,9 +45,12 @@ const actions = {
     const stateBrowser = userStorage.getters.getStateBrowser()
     if (profile.user_type?.includes('client') && stateBrowser === 'prestamos') {
       await userTypeStore.actions.loadFlowClient()
-    } else if (profile.user_type?.includes('investor') && stateBrowser === 'prestamos') {
+      return
+    } else if (profile.user_type?.includes('investor') && stateBrowser === 'inversiones') {
       await userTypeStore.actions.loadFlowInvestment()
+      return
     }
+    loaderStore.actions.loadingOverlay().dismiss()
   },
 
   async getProfile(): Promise<void> {

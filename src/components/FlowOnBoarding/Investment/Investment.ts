@@ -1,9 +1,9 @@
-import { computed, defineComponent, ref } from 'vue'
+import { computed, defineComponent, ref, onMounted } from 'vue'
 import { investmentRequest } from '@/api-client'
 import { modalStore, userStorage } from '@/storage'
 import { CreditLimit } from '@/interfaces/IInvestment'
 import { IAlert } from '@/interfaces/IAlert'
-import { useRouter } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 
 export default defineComponent({
   name: 'InvestmentComponent',
@@ -14,6 +14,20 @@ export default defineComponent({
     const profile = computed(() => userStorage.getters.getStateProfile())
 
     const router = useRouter()
+
+    const route = useRoute()
+
+    const isOnBoardingRoute = ref(true)
+
+    const user_type = ref('')
+
+    onMounted(() => {
+      const { intention, isOnBoarding } = route.params
+      user_type.value = intention as string
+      console.log('intention', intention)
+      isOnBoardingRoute.value = !!isOnBoarding
+      console.log('isOnBoardingRoute', isOnBoardingRoute.value)
+    })
 
     const onCreateInvestment = async (): Promise<void> =>  {
       if (investment.value.amount! > 0) {
@@ -42,7 +56,9 @@ export default defineComponent({
 
     return {
       investment,
-      onCreateInvestment
+      onCreateInvestment,
+      isOnBoardingRoute,
+      user_type
     }
   }
 })

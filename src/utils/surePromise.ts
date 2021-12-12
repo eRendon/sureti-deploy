@@ -1,6 +1,15 @@
 import { ISurePromise } from '@/interfaces/ISurePromise'
 import { AxiosResponse } from 'axios'
 
+/**
+ ToDo SurePromise
+ * Deserialize token user when is login
+ * @return Promise<ISurePromise>
+ * @param promise
+ * @type Promise<AxiosResponse>
+ */
+
+
 const surePromise = <T> (promise: Promise<AxiosResponse>): Promise<ISurePromise<T>> => (
     promise
         .then((result) => {

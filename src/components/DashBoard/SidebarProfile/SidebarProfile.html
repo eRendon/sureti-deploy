@@ -21,52 +21,38 @@
             </div>
         </transition>
         <aside
-                class="transform top-0 right-0 w-64 bg-white fixed h-full overflow-auto ease-in-out transition-all duration-300 z-30"
+                class="sureti-profile-sidebar transform top-0 right-0 w-64 bg-white fixed h-full overflow-auto ease-in-out transition-all duration-300 z-30"
                 :class="isOpen ? 'translate-x-0' : 'translate-x-full'"
         >
-            <div>
-                <div class="card">
-                    <div>
-                        <div>
-                            Imagen de usuario
-                        </div>
-                        <div>
-                            {{ user.first_name }} {{ user.middle_name }} {{ user.last_name }}
-                            <span> || rol ||</span>
-                        </div>
+            <img class="sureti-profile-sidebar-close sureti-close" src="@/assets/img/icons/expand.svg" @click="closeModalProfile" />
+                <div class="sureti-profile-sidebar-card">
+                    <img class="sureti-profile-sidebar-thumb" src="@/assets/img/icons/user-icon.svg" />
+                    <div class="sureti-profile-sidebar-details">
+                        <span class="sureti-profile-sidebar-name">{{ user.first_name }} {{ user.middle_name ? user.middle_name + ' ' : '' }}</span> 
+                        <span class="sureti-profile-sidebar-lastname">{{ user.last_name }}</span>
                     </div>
-                    <div>
-                        <span> Última visita</span>
-                        <span> 23 Abril, 2020</span>
-                    </div>
-                    <div>
-                        Usuario: +57 3162558732
-                    </div>
+                    
                 </div>
 
-                <div>
+                <nav class="sureti-profile-sidebar-menu">
                     <ul>
                         <li>
                             <router-link to="/profile" @click="closeModalProfile">
-                                <label>Mi perfil</label>
-                                <i>profile</i>
+                                Editar perfil
                             </router-link>
                         </li>
                         <li>
-                            <a>
-                                <label>Cerrar sesión</label>
-                                <i>log_out</i>
-                            </a>
+                            <router-link to="/help">
+                                Ayuda / Contácto
+                            </router-link>
                         </li>
                         <li>
-                            <a>
-                                <label>Ayuda / Contácto</label>
-                                <i>help</i>
+                            <a @click="logOut">
+                                Cerrar sesión
                             </a>
                         </li>
                     </ul>
-                </div>
-            </div>
+                </nav>
         </aside>
     </div>
 

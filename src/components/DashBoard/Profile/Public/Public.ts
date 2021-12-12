@@ -1,10 +1,11 @@
 import {computed, defineComponent, onMounted, ref, watch} from 'vue'
-import {loaderStore, userStorage} from '@/storage'
+import { loaderStore, modalStore, userStorage } from '@/storage'
 import { IDocumentFile } from '@/interfaces/IOwner'
 import {IDocument, IFilterDocument, IGuaranteeDocument, IUserDocument} from '@/interfaces/IFiles'
 import { fileRequest, userRequest } from '@/api-client'
 import { IInformation } from '@/interfaces/IUser'
 import {is} from "@vee-validate/rules";
+import { IAlert } from '@/interfaces/IAlert'
 
 interface PublicProfile {
     [key: string]: string | undefined,
@@ -113,7 +114,6 @@ export default defineComponent({
         }
 
         const uploadDocumentFiles = () => {
-            console.log(files)
             if (verifyFilesSchema.value) {
                 loaderStore.actions.loadingOverlay({ spinnerDots: true }).present()
                 files.value.map(async (file) => {
@@ -163,12 +163,21 @@ export default defineComponent({
 
         const onUpdatePublicProfile = async () => {
             if (verifySchema.value) {
+                loaderStore.actions.loadingOverlay({ spinnerDots: true }).present()
                 const { data, success } = await userRequest.updateInformation(publicProfile.value)
                 console.log(data)
                  if (success) {
+                     const alert: IAlert = {
+                         show: true,
+                         text: 'Sus datos han sido acualizados correctamente'
+                     }
                      // await uploadDocumentFiles(files.value)
                      await userStorage.actions.getProfile()
+                     loaderStore.actions.loadingOverlay().dismiss()
+                     modalStore.actions.alert(alert).present()
+                     return
                  }
+                loaderStore.actions.loadingOverlay().dismiss()
             }
         }
 

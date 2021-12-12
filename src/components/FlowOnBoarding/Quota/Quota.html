@@ -7,6 +7,6 @@
 	<p>Paga mensualmente solo intereses y abona a capital cuando desees. Sin penalidades, 
 		sin comisiones, ni anticipos.
 	</p>
-	<button @click="onCreateLoan">Consigue tu prestamo</button>
-	<router-link to="/user/on-boarding" class="go-back-link"><img src="@/assets/img/icons/arrow-right.svg" />Volver</router-link>
+	<button @click="onCreateLoan">{{ isOnBoarding ? 'Continuar con el registro' : 'Consigue tu prestamo' }}</button>
+	<router-link v-if="isOnBoarding && (user_type !== 'dashboard')" to="/user/on-boarding" class="go-back-link"><img src="@/assets/img/icons/arrow-right.svg" />Volver</router-link>
 </div>

@@ -2,4 +2,7 @@
 
 <script lang="ts" src="./Payments.ts"> </script>
 
-<style scoped> </style>
+<style scoped>
+
+
+</style>

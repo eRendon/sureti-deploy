@@ -53,7 +53,10 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: '/user/on-boarding',
         name: 'OnBoarding',
-        component: () => import(/* webpackChunkName: "OnBoarding" */ '../views/onBoarding/onBoarding.vue')
+        component: () => import(/* webpackChunkName: "OnBoarding" */ '../views/onBoarding/onBoarding.vue'),
+        meta: {
+          requiresAuth: true
+        },
       },
       {
         path: '/user/on-boarding/loans/:intention?',
@@ -64,6 +67,11 @@ const routes: Array<RouteRecordRaw> = [
         path: '/profile',
         name: 'Profile',
         component: () => import(/* webpackChunkName: "Guarantee" */ '../views/dashboard/profile/profile.vue')
+      },
+      {
+        path: '/help',
+        name: 'Help',
+        component: () => import(/* webpackChunkName: "Help" */'@/views/dashboard/help/help.vue')
       },
       {
         path: '/user/on-boarding/investment/:intention?',

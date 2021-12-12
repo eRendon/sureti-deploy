@@ -1,21 +1,35 @@
 <div>
-    <div v-if="isToUpdate">
-        <h2>Se ha enviado un codigo de confirmacion</h2>
+    <div class="sureti-sensitive-update-code" v-if="isToUpdate">
+        <h2>Ingrese el código</h2>
+        <p>Hemos enviado un código de verificación a su email y/o whatsapp. Por favor ingrese el código aquí para validar los cambios.</p>
         <div>
             <input v-model="sensitiveData.temporal_code" type="text" placeholder="Código temporal">
         </div>
-        <button  @click="updateSensitiveInformation">Actualizar informacion</button>
+        <button  @click="updateSensitiveInformation">Actualizar informacion</button>&nbsp;
         <button  @click="getCode">Reenviar codigo</button>
     </div>
     <div v-else>
-        <div>
-            <div>
+        <h2>Datos de acceso</h2>
+        <ul>
+            <li class="third">
+                <label>
+                    Número de celular:
+                </label>
                 <input v-model="sensitiveData.cell_phone" type="text" placeholder="Número de celular">
-            </div>
-            <div>
+            </li>
+            <li class="third">
+                <label>
+                    Email:
+                </label>
                 <input v-model="sensitiveData.email" type="text" placeholder="Email">
-            </div>
-            <div>
+            </li>
+            <li class="third">
+                <label>
+                    Contraseña:
+                </label>
+                <input v-model="sensitiveData.password" type="text" placeholder="••••••••">
+            </li>
+            <li class="third">
                 <label for="mfa_email">
                     Verificación por email
                     <input v-model="sensitiveData.mfa_email" id="mfa_email" type="checkbox" >
@@ -24,11 +38,12 @@
                     Verificación por teléfono
                     <input v-model="sensitiveData.mfa_phone" id="mfa_phone" type="checkbox" >
                 </label>
-            </div>
-            <div>
-                <input v-model="sensitiveData.password" type="text" placeholder="Contraseña">
-            </div>
-        </div>
-        <button @click="getCode">Enviar / Guardar</button>
+            </li>
+            <li class="submit">
+                <br>
+                <button @click="getCode">Enviar / Guardar</button>
+            </li>
+        </ul>
+        
     </div>
 </div>

@@ -43,12 +43,12 @@ export default class Investment {
     }
   }
 
-  async investment (): Promise<ISurePromise<IGuarantee[]>> {
+  async investment (): Promise<ISurePromise<IInvestment[]>> {
     const stateDots: ILoadingDots = {
       spinnerDots: true
     }
     loaderStore.actions.loadingOverlay(stateDots).present()
-    const axiosService: AxiosService<IGuarantee[], null> = new AxiosService()
+    const axiosService: AxiosService<IInvestment[], null> = new AxiosService()
     const { user_id } = userStorage.getters.getStateProfile()
     try {
       return await axiosService.getData(null, `/user/investment/${user_id}`)

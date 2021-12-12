@@ -2,13 +2,7 @@ import {defineComponent} from "vue";
 import  { Form, Field, defineRule } from 'vee-validate';
 import { required, email } from '@vee-validate/rules';
 import {ILogin} from '@/interfaces/IAuth';
-import { authRequest } from '@/api-client';
-import {apiClient} from '@/api-client/axios/config';
-import parseJwt from "../../../utils/deserializeJwt";
-import {IAlert} from '@/interfaces/IAlert';
-import { modalStore, authStorage, userStorage, loaderStore } from '../../../storage';
-import { ILoadingDots } from '@/interfaces/ILoader'
-import { useRouter } from 'vue-router'
+import loginAction from '@/utils/loginAction'
 
 defineRule('required', required);
 defineRule('email', email);
@@ -20,51 +14,28 @@ export default defineComponent({
     Field,
   },
   setup () {
+
+      /**
+       * Schema validation form
+       * rules Required
+       */
+
       const schema = {
         user: 'required',
         password: 'required'
       }
 
-      const router = useRouter()
+      /**
+       ToDo Login
+       * Login user whit form view
+       * @return Promise<void>
+       * @type ILogin
+       * @param loginForm
+       */
 
-      const onLogin = async (loginForm: ILogin) => {
-        const stateDots: ILoadingDots = {
-          spinnerDots: true
-        }
-        loaderStore.actions.loadingOverlay(stateDots).present()
-        apiClient.defaults.headers.common['Authorization'] = ''
-        loginForm.user = loginForm.user.toLowerCase()
-        const { success, data } = await authRequest.logIn(loginForm)
-        if (success) {
-          if (data.redirect_to === 'activate') {
-            const alert: IAlert = {
-              show: true,
-              text: 'Por favor, verifique su cuenta'
-            }
-            modalStore.actions.alert(alert).present()
-            await router.push({
-              name: 'Verify',
-              params: {
-                token: data.token
-              }
-            })
-            loaderStore.actions.loadingOverlay().dismiss()
-            return
-          }
-          const deserializeJwt = parseJwt(data.token!)
-          if (!deserializeJwt.sub_rol) {
-            const alert: IAlert = {
-              show: true,
-              text: 'Email o contraseña incorrecta'
-            }
-            modalStore.actions.alert(alert).present()
-            loaderStore.actions.loadingOverlay().dismiss()
-            return
-          }
-          apiClient.defaults.headers.common['Authorization'] = `Bearer ${data.token}`
-          authStorage.actions.stateAuth(data)
-          await userStorage.actions.getProfile()
-        }
+
+      const onLogin = async (loginForm: ILogin): Promise<void> => {
+        await loginAction(loginForm)
       }
 
       return {

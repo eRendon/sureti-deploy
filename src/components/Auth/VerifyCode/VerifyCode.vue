@@ -3,6 +3,15 @@
 <script lang="ts" src="./VerifyCode.ts"> </script>
 
 <style scoped>
+#sureti-verify-code {
+    margin:0 auto;
+    max-width:320px;
+}
+.sureti-verify-actions button {
+    display:inline-block;
+    margin-right: 10px;
+    vertical-align:top;
+}
 #sureti-verify-code h3 {
     margin:20px 0 7px;
     line-height:25px;

@@ -21,6 +21,11 @@ export default defineComponent({
   },
   setup() {
 
+    /**
+     * Schema validation form
+     * rules required|email|min:8
+     */
+
     const schema = {
       email: 'required|email',
       password: 'required|min:8',
@@ -33,6 +38,12 @@ export default defineComponent({
     }
 
     const router = useRouter()
+
+    /**
+     ToDo Register
+     * @type IRegister
+     * @return Promise<void>
+     */
 
     const submit = async (value: IRegister): Promise<void> => {
       console.log('submit', value)

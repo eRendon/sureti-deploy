@@ -7,6 +7,7 @@ const mutations = {
     state.profile = profile
   },
   setStateBrowser (stateBrowser: string): void {
+    localStorage.setItem('stateBrowser', stateBrowser)
     state.isBrowsing = stateBrowser
   },
   setStateGetMovements (payload: boolean): void {

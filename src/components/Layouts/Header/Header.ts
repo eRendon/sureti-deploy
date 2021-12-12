@@ -28,13 +28,14 @@ export default defineComponent({
                 await router.push({
                     name: 'Dashboard'
                 })
-                userTypeStore.actions.loadFlowInvestment()
+                await userTypeStore.actions.loadFlowInvestment()
                 return
             }
             await router.push({
                 name: 'Investment',
                 params: {
-                    intention: 'dashboard'
+                    intention: 'dashboard',
+                    isOnBoarding: 1
                 }
             })
         }
@@ -62,6 +63,7 @@ export default defineComponent({
                     intention: 'dashboard'
                 }
             })
+            loaderStore.actions.loadingOverlay().dismiss()
         }
 
         const openProfile = (): void => {

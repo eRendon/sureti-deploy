@@ -9,6 +9,10 @@ import { ILoadingDots } from '@/interfaces/ILoader'
 export default defineComponent({
   name: 'Quota',
   props: {
+    isOnBoarding: {
+      type: Boolean,
+      default: true
+    },
     guarantee_value: {
       type: Number,
       default: 0
@@ -17,7 +21,7 @@ export default defineComponent({
       type: String,
       default: ''
     },
-    isFirsGuarantee: {
+    isFirstGuarantee: {
       type: Boolean,
       default: true
     }
@@ -58,7 +62,7 @@ export default defineComponent({
       }
 
       modalStore.mutations.setStateNewGuarantee(false)
-      if (props.isFirsGuarantee) {
+      if (props.isFirstGuarantee) {
         await userStorage.actions.getProfile()
         await router.push({
           name: 'Dashboard'

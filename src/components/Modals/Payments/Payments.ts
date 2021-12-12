@@ -31,9 +31,16 @@ export default defineComponent({
     const onCancelSelected = (): void => {
       payment.value.pay_out_date = ''
       payment.value.amount = 0
-      if (!guarantee_id_params.value) {
+      console.log(getIdParams())
+      if (!getIdParams()) {
         guaranteeStore.mutations.setSelectedGuarantee({})
       }
+    }
+
+    const getIdParams = (): boolean => {
+      const { id } = route.params
+      console.log('guarantee_id_params', id)
+      return !!id;
     }
 
     onMounted(() => {
@@ -44,8 +51,8 @@ export default defineComponent({
 
     const profile = computed(() => userStorage.getters.getStateProfile())
 
-    const totalCapitalDebt = computed(() => Number(profile.value.total_loans!) - Number(profile.value.total_capital_payments!))
-    const totalInterestDebt = computed(() => Number(profile.value.total_loans_interest) - Number(profile.value.total_interest_payments))
+    const totalCapitalDebt = computed(() => Number(selectedGuarantee.value.loan?.balance))
+    const totalInterestDebt = computed(() => Number(selectedGuarantee.value.loan?.total_interests_balance))
 
     const onDismissModal = (): void => {
       modalStore.actions.paymentModal({ show: false})

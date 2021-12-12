@@ -5,6 +5,7 @@ import Indicator from '@/components/DashBoard/Indicator/Indicator.vue'
 import { IIndicator } from '@/interfaces/IIndicator'
 import { guaranteeStore, loansStore, userStorage, userTypeStore } from '@/storage'
 import RequestModal from '@/components/Modals/RequestLoan/RequestLoan.vue'
+import Investment from '@/components/List/Investment/Investment.vue'
 
 export default defineComponent({
   name: 'HomeView',
@@ -16,8 +17,10 @@ export default defineComponent({
   },
   setup () {
 
+    const stateBrowser = computed(() => userStorage.getters.getStateBrowser())
+
     const component = shallowRef<{ isComponent: DefineComponent<any, any, any>}>({
-      isComponent: GuaranteeList
+      isComponent: stateBrowser.value === 'prestamos' ? GuaranteeList : Investment
     })
 
     const indicators = computed<IIndicator[]>(() => userTypeStore.getters.getIndicators())
@@ -27,12 +30,10 @@ export default defineComponent({
       if (id === 'Movements') {
         component.value.isComponent = Movements
       } else {
-        component.value.isComponent = GuaranteeList
+        component.value.isComponent = stateBrowser.value === 'prestamos' ? GuaranteeList : Investment
       }
       triggerRef(component)
     }
-
-    const stateBrowser = computed(() => userStorage.getters.getStateBrowser())
 
     const guarantees = computed(() => guaranteeStore.getters.getGuaranteesState())
 

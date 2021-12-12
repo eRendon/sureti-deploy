@@ -1,0 +1,11 @@
+<div v-if="showModal" class="sureti-movement-modal" id="sureti-new-guarantee-modal">
+    <div class="absolute bg-black opacity-80 inset-0 z-0"></div><!-- OVERLAY -->
+        <!--body-->
+        <div class="sureti-movement-modal-body">
+            <img class="sureti-movement-modal-close sureti-close" src="@/assets/img/icons/expand.svg" @click="onDismissModal" />
+
+            <div>
+                    <slot></slot>
+            </div>
+        </div>
+</div> 

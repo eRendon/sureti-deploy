@@ -27,9 +27,14 @@ export default defineComponent({
             modalStore.mutations.setStateProfileModal(false)
         }
 
+        const logOut = async () => {
+            await authStorage.actions.logOut()
+        }
+
         return {
             user,
             isOpen,
+            logOut,
             drawer,
             closeModalProfile
         }

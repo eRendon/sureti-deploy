@@ -1,21 +1,24 @@
-<div>
+<div class="sureti-movement-list">
    <div>
-        <h1>ÚLTIMOS MOVIMIENTOS:</h1>
-        <div>
-            <label for="isPayment">
+    <header id="sureti-dashboard-list-header">
+        <h2>Últimos movimientos:</h2>
+    </header>
+        
+        <div class="sureti-movement-list-filters" v-if="profile.user_type === 'client'">
+            <label for="isPayment" class="sureti-movement-list-filter">
                 Pagos
-                <input id="isPayment" :value="true" v-model="isPayments" type="radio">
+                <input id="isPayment" :value="false" v-model="isPayments" type="radio">
             </label>
-            <label for="notPayment">
+            <label for="notPayment" class="sureti-movement-list-filter">
                 No pagos
-                <input id="notPayment" :value="false" v-model="isPayments" type="radio">
+                <input id="notPayment" :value="true" v-model="isPayments" type="radio">
             </label>
         </div>
 <!--        <button @click="showFilter = true">FILTRO</button>-->
     </div>
 
-    <div v-for="(movement, index) in movements">
-        <div>
+    <div v-for="(movement, index) in movements" class="sureti-movement-summary">
+        <div class="sureti-movement-summary-title">
             <span v-if="movement.transaction_type === 'loan_disbursement'">Desembolso de prestamo</span>
             <span v-if="movement.transaction_type === 'create_guarantee_request' && movement.state === 'aceptada'">Garantía pre-aprobada</span>
             <span v-if="movement.transaction_type === 'create_guarantee_request' && movement.state === 'rechazada'">Garantía rechazada</span>
@@ -28,12 +31,16 @@
             <span v-if="movement.transaction_type === 'loan_request'">Solicitud de préstamo - {{ movement.state }}</span>
             <span v-if="movement.payment_type === 'interest'">Pago de intereses</span>
             <span v-if="movement.payment_type === 'capital'">Pago de capital</span>
+            <!-- INVERSIONISTAS -->
+            <span v-if="movement.transaction_type === 'interest_payment_transaction'">Pago de intereses</span>
+            <span v-if="movement.transaction_type === 'capital_payment_transaction'">Abono a capital</span>
+            <span v-if="movement.transaction_type === 'investment_disbursement'">Desembolso de inversión</span>
             ({{ movement.creation_date }})
         </div>
-        <div @click="isDetailMovement = index"> +</div>
-        <div @click="isDetailMovement = -1" v-if="isDetailMovement === index">
-            <span> {{ movement.amount }}</span>
-            <span> {{ movement.state }}</span>
+        <p>{{ movement.transaction_type }}</p>
+        <div class="sureti-movement-summary-details">
+            <span v-if="movement.amount"> {{ $filters.formatCurrency(movement.amount) }}</span>
+            <span> ({{ movement.state }})</span>
         </div>
     </div>
 </div>

@@ -2,7 +2,6 @@
     <div id="sureti-dashboard-stats-column" class="sureti-flex-col" >
         <div v-for="(indicator, index) in indicators">
             <indicator :data="indicator" class="sureti-dashboard-stat" :id="'sureti-stat-' + index"> </indicator>
-            <RequestModal></RequestModal>
         </div>
     </div>
     <div id="sureti-dashboard-list-column" class="sureti-flex-col" >
