@@ -1,4 +1,5 @@
-<div class="sureti-investment-list-box" v-for="(investment, index) in investments">
+<div v-for="(investment, index) in investments.filter((x) => {return x.state != 'cash out'})">
+    <div class="sureti-investment-list-box">
 <!--    <img class="investment-icon property" src="@/assets/img/icons/property.svg" />-->
     <div class="investment-summary-info">
         <h4>Inversión #{{ parseInt(index) + 1  }}</h4>
@@ -11,7 +12,7 @@
         <div class="hide">Fotos</div>
         <!--            bloque datos-->
         <div class="sureti-investment-list-stats">
-            <p class="sureti-investment-list-stat">
+            <p class="sureti-investment-list-stat hide">
                 <span class="stat-label">Monto invertido</span> <span class="stat-value">{{ $filters.formatCurrency(investment.amount) }}</span>
             </p>
             <p class="sureti-investment-list-stat">
@@ -28,4 +29,5 @@
         <p class="sureti-investment-list-ids">Creada: {{ investment.creation_date }}</p>
         <p class="sureti-investment-list-ids">{{ investment.investment_id }} &nbsp;/ &nbsp;{{ investment.guarantee_id }}</p>
     </div>
-</div>
+</div><!-- BOX -->
+</div><!-- V-FOR -->

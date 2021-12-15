@@ -89,8 +89,8 @@ const actions = {
       amount: total_investment_interests - total_received_interest_payments
     }
     const indicatorQuota: IIndicator = {
-      title: 'Capital invertido',
-      amount: total_investments
+      title: 'Capital rentando',
+      amount: total_investments - total_received_capital_payments
     }
     const indicators: IIndicator[] = []
     indicators.push(indicatorLoan)

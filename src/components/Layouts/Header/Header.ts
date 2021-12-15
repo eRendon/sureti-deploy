@@ -35,7 +35,7 @@ export default defineComponent({
                 name: 'Investment',
                 params: {
                     intention: 'dashboard',
-                    isOnBoarding: 1
+                    isOnBoarding: 1,
                 }
             })
         }

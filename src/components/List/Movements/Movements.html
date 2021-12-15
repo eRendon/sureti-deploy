@@ -37,7 +37,7 @@
             <span v-if="movement.transaction_type === 'investment_disbursement'">Desembolso de inversión</span>
             ({{ movement.creation_date }})
         </div>
-        <p>{{ movement.transaction_type }}</p>
+        <p class="hide">{{ movement.transaction_type }}</p>
         <div class="sureti-movement-summary-details">
             <span v-if="movement.amount"> {{ $filters.formatCurrency(movement.amount) }}</span>
             <span> ({{ movement.state }})</span>

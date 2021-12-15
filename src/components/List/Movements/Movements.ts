@@ -15,7 +15,7 @@ export default defineComponent({
 
         const movementFilter = ref<ITransaction & IPayment>({})
         const paymentsFilter = ref<IPayment>({})
-        const isPayments = ref(false)
+        const isPayments = ref(true)
         const profile = computed(() => userStorage.getters.getStateProfile())
         const isDetailMovement = ref(-1)
         const movementsPayments = ref<IMovements[]>([])
@@ -99,8 +99,8 @@ export default defineComponent({
                 return
             }
             movementsInvestor.value.push(...movements.filter((movement) => {
-                if (movement.transaction_type === 'investment_disbursement' || movement.transaction_type === 'investment_cash_out_disbursement' ||
-                movement.transaction_type === 'capital_payment_transaction' || movement.transaction_type === 'interest_payment_transaction' || movement.transaction_type === 'investment_interest_cash_out_transaction') {
+                if (movement.transaction_type === 'investment_disbursement' || movement.transaction_type === 'capital_payment_transaction' ||
+                    movement.transaction_type === 'interest_payment_transaction') {
                     return movement
                 }
             }))
@@ -110,7 +110,7 @@ export default defineComponent({
         }
 
         const movements = computed<IMovements[]>(() => {
-            if (!isPayments.value) {
+            if (isPayments.value) {
                 return movementsPayments.value.length > 0 ? movementsPayments.value : movementsInvestor.value
             }
             return movementsTransfer.value

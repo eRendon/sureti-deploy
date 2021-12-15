@@ -211,7 +211,7 @@ ul {
 
 /* UTILITY CLASSES */
 .hide {
-    display:none;
+    display:none !important;
 }
 
 /* FLEX LAYOUT */

@@ -3,7 +3,7 @@ import { investmentRequest } from '@/api-client'
 import { modalStore, userStorage } from '@/storage'
 import { CreditLimit } from '@/interfaces/IInvestment'
 import { IAlert } from '@/interfaces/IAlert'
-import { useRoute, useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 
 export default defineComponent({
   name: 'InvestmentComponent',
