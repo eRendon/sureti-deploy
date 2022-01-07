@@ -53,10 +53,18 @@ export default defineComponent({
             ]
         }
 
+        /**
+        * Model to houseDeed files
+        */
+
         const houseDeed = ref<IDocumentFile>({
             doc_type: 'COPIA DE ESCRITURAS',
             text: 'Escrituras'
         })
+
+        /**
+         * Model to filesPropertyFront
+         */
 
         const filesPropertyFront = ref<IDocumentFile[]>([
             {
@@ -64,6 +72,10 @@ export default defineComponent({
                 text: 'Cédula (frente)'
             },
         ])
+
+        /**
+         * Model to filesPropertyBack
+         */
 
         const filesPropertyBack = ref<IDocumentFile[]>([
             {
@@ -91,18 +103,18 @@ export default defineComponent({
         const isToFilter = computed(() => loansStore.getters.getStateToFilter())
 
         watch(() => isToFilter.value, (isToFilter, prevIsToFilter) => {
-            // loaderStore.actions.loadingOverlay({spinnerDots: true}).present()
-            console.log('watch')
             filterGuaranteeData()
         })
+
+        /** ToDo FilterGuarantee
+         * Init data, filter guarantee whit id in route params to get loans, files, guarantee data.
+         */
 
         const filterGuaranteeData = (): void => {
             guaranteeStore.actions.filterSelectedGuarantee(guarantee_id.value as string)
             loansStore.actions.filterLoan(guarantee_id.value as string)
             loansStore.actions.filterRequest(guarantee_id.value as string)
-            // guarantee.value = guaranteeStore.getters.getSelectedGuarantee()
             if (!guarantee.value.owners) {
-                // addOwner()
                 guarantee.value.owners = owners.value
             }
             guarantee.value.owners?.map((owner) => {
@@ -127,7 +139,6 @@ export default defineComponent({
                 doc_type: 'CERTIFICADO DE LIBERTAD Y TRADICION INICIAL',
                 text: 'Certificdo de libertad y tradición'
             }
-            console.log('hay request')
             loaderStore.actions.loadingOverlay().dismiss()
         }
 
@@ -146,16 +157,6 @@ export default defineComponent({
                 owner_identification_type: '',
                 owner_last_name: '',
                 owner_middle_name: ''
-                // filesProperty: [
-                //     {
-                //         doc_type: 'CEDULA PROPIETARIO VISTA FRONTAL',
-                //         text: 'Cédula (frente)'
-                //     },
-                //     {
-                //         doc_type: 'CEDULA PROPIETARIO VISTA TRASERA',
-                //         text: 'Cédula (Reverso)'
-                //     }
-                // ]
             })
         }
 
@@ -188,6 +189,15 @@ export default defineComponent({
             )
         }
 
+        /** ToDo OnSelectedDocument
+         * Charge document into guarantee
+         * @param document document send in the html iteration
+         * @param file
+         * @type IDocumentFile
+         * @type Array<File>
+         * @return void
+         */
+
         const onSelectedDocument = (document: IDocumentFile, file: Array<File>): void => {
             document.file = file[0]
         }
@@ -205,7 +215,12 @@ export default defineComponent({
             await getDocuments()
         })
 
-        const getDocuments = async () => {
+        /** ToDo GetDocuments
+         * Get documents whit id user and guarantee id
+         * @return Promise<void>
+         */
+
+        const getDocuments = async (): Promise<void> => {
             const filter: IFilterDocument = {
                 user_id: profile.value.user_id!,
                 guarantee_id: guarantee_id.value
@@ -229,14 +244,13 @@ export default defineComponent({
             houseDeed.value.file = files[0]
         }
 
-        const onUpdateOwners = async () => {
+        /** ToDo UnUpdateOwners
+         * Update Owners Documents whit user id
+         * @return Promise<void>
+         */
+
+        const onUpdateOwners = async (): Promise<void> => {
             const { owners } = guarantee.value
-            // const filesProperty: any = []
-            // owners?.map((owner) => {
-            //     filesProperty.push(...owner.filesProperty!)
-            //     delete owner.filesProperty
-            // })
-            // console.log('filesProperty', filesProperty)
             const { user_id } = userStorage.getters.getStateProfile()
             const guaranteeUpdate: IGuarantee = {
                 owners,
@@ -244,7 +258,6 @@ export default defineComponent({
             }
             const { data, success } = await guaranteeRequest.update(guarantee_id.value, guaranteeUpdate)
             console.log(data)
-            // uploadDocumentFiles(filesProperty as IDocumentFile[])
             if (success) {
                 const alert: IAlert = {
                     show: true,
@@ -267,7 +280,14 @@ export default defineComponent({
             })
         }
 
-        const uploadDocumentFile = async (document: IDocumentFile) => {
+        /** ToDo UploadDocumentFile
+         * Upload documents whit user_id whit type FormData param
+         * @return Promise<void>
+         * @param document
+         * @type IDocumentFile
+         */
+
+        const uploadDocumentFile = async (document: IDocumentFile): Promise<void> => {
             const { user_id } = userStorage.getters.getStateProfile()
             const userDocument: IGuaranteeDocument = {}
             userDocument.file = document.file
@@ -285,7 +305,6 @@ export default defineComponent({
 
         const onUpdateAppraisal = async () => {
             const { user_id } = userStorage.getters.getStateProfile()
-            // const { propertyTax, freedomAndTradition } = guarantee.value
             const guaranteeUpdate: IGuarantee = {
                 real_estate_area: Number(guarantee.value.real_estate_area),
                 real_estate_chip: guarantee.value.real_estate_chip,
@@ -298,12 +317,6 @@ export default defineComponent({
             const { data, success } = await guaranteeRequest.update(guarantee_id.value, guaranteeUpdate)
             console.log(data)
             if (success) {
-                // if (propertyTax) {
-                //     await uploadDocumentFile(propertyTax!)
-                // }
-                // if (freedomAndTradition) {
-                //     await uploadDocumentFile(freedomAndTradition!)
-                // }
                 const alert: IAlert = {
                     show: true,
                     text: 'Sus datos han sido actualizados correctamente'
@@ -418,6 +431,10 @@ export default defineComponent({
         const openFlowProposal = (): void => {
             modalStore.actions.proposalModal(createdProposal.value, true)
         }
+
+        /** ToDo Filter Filter
+         * Computed properties to see files guarantee
+         */
 
         const propertyTaxDocuments = computed(() => documents.value.filter((document) => document.doc_type === 'IMPUESTO PREDIAL'))
         const freedomTraditionDocuments = computed(() => documents.value.filter((document) => document.doc_type === 'CERTIFICADO DE LIBERTAD Y TRADICION INICIAL'))

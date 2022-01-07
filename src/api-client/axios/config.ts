@@ -1,7 +1,13 @@
-import axios, { AxiosError } from "axios";
+import axios, {AxiosError, AxiosInstance} from "axios";
 import { authStorage, modalStore } from '@/storage'
 
-const apiClient = axios.create({
+/** ToDo Config Axios
+ * Const to create instance and config
+ * @const { apiClient }
+ * @type AxiosInstance
+ */
+
+const apiClient: AxiosInstance = axios.create({
   baseURL: 'https://sureti-client-api.oiti.cloud',
   // baseURL: 'http://71516d6a71f2.ngrok.io/proline/web/client',
   headers: {
@@ -10,6 +16,10 @@ const apiClient = axios.create({
 })
 
 export { apiClient }
+
+/** ToDo Interceptor request
+ * Interceptor to see the progress to upload fetch and download fetch, add more function in this interceptor
+ */
 
 apiClient.interceptors.request.use((config) => {
   let progressEvent;
@@ -23,6 +33,10 @@ apiClient.interceptors.request.use((config) => {
 }, (error) => {
   return Promise.reject(error);
 });
+
+/** ToDo Interceptor Response
+ * Interceptor to validate user session, add more function in this interceptor
+ */
 
 apiClient.interceptors.response.use((response) => {
   return response

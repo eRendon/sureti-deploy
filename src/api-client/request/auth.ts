@@ -9,17 +9,19 @@ import {
   IResetToken, IResponseResetToken,
   ISchema
 } from '@/interfaces/IAuth'
-import { ILoadingDots } from '@/interfaces/ILoader'
-import { loaderStore } from '@/storage'
+
 
 export default class Auth {
 
+  /** ToDo Log In
+   * Login function user
+   * @param loginForm
+   * @type ILogin
+   * @return Promise<ISurePromise<ILoginResponse>>
+   */
+
   public async logIn (loginForm: ILogin): Promise<ISurePromise<ILoginResponse>> {
     const axiosService = new AxiosService<ILoginResponse, ILogin>()
-    // const stateDots: ILoadingDots = {
-    //   spinnerDots: true
-    // }
-    // loaderStore.actions.loadingOverlay(stateDots).present()
     try {
       return await axiosService.postData(loginForm, '/auth/login/user')
     } catch (e) {

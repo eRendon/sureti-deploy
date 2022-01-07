@@ -3,6 +3,7 @@ import  { Form, Field, defineRule } from 'vee-validate';
 import { required, email } from '@vee-validate/rules';
 import {ILogin} from '@/interfaces/IAuth';
 import loginAction from '@/utils/loginAction'
+import {userStorage} from "@/storage";
 
 defineRule('required', required);
 defineRule('email', email);
@@ -35,6 +36,7 @@ export default defineComponent({
 
 
       const onLogin = async (loginForm: ILogin): Promise<void> => {
+          userStorage.mutations.setStateBrowser('')
         await loginAction(loginForm)
       }
 

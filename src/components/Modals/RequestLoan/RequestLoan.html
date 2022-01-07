@@ -18,7 +18,7 @@
                         <p class="guarantee-debt-label">Cupo disponible: </p><p class="guarantee-debt-amount"> {{ $filters.formatCurrency(parseInt(guarantee.guarantee_credit_limit) - parseInt(activeLoan.balance)) }}</p>
                     </li>
                     <li class="half">
-                        <button v-if="!guarantee_id_params" @click="onCancelSelected" class="inverse">
+                        <button v-if="getIdParams" @click="onCancelSelected" class="inverse">
                             Cambiar garantía
                         </button>
                     </li>
@@ -27,7 +27,7 @@
 
             <div class="sureti-modal-transaction-box">
                 <label>Cuánto deseas solicitar?</label>
-                <input id="requestLoan" type="text" v-model="requestLoan.amount">
+                <input id="requestLoan" type="number" v-model="requestLoan.amount">
                 <p>
                     El mondo debe ser mayor a 0 y menor a {{ Number(guarantee.guarantee_credit_limit) - Number(activeLoan.balance) }}
                 </p>

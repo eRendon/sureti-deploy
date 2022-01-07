@@ -25,10 +25,13 @@ const actions = {
     }
     const stateBrowser = userStorage.getters.getStateBrowser()
     // await guaranteeStore.actions.getGuarantees()
-    console.log('stateBrowser', stateBrowser)
+    console.log('validateUserType', stateBrowser)
+    console.log('validateUserType', profile)
     if (profile.user_type === 'investor' && !stateBrowser) {
+      console.log('investor', stateBrowser)
       userStorage.mutations.setStateBrowser('inversiones')
-    } else if (profile.user_type === 'client' && !stateBrowser){
+    } else if ((profile.user_type === 'client' || profile.user_type === 'client_investor') && !stateBrowser){
+      console.log('client', stateBrowser)
       userStorage.mutations.setStateBrowser('prestamos')
     }
     await this.validateSchemaUserType(profile)

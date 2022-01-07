@@ -1,5 +1,5 @@
 export interface IRequest {
-  amount?: number,
+  amount?: number | string,
   creation_date?: string,
   guarantee_id?: string,
   state?: string,

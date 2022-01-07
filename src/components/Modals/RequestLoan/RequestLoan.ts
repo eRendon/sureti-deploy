@@ -5,6 +5,7 @@ import { loanRequest } from '@/api-client'
 import { useRoute } from 'vue-router'
 import { IAlert } from '@/interfaces/IAlert'
 import GuaranteeList from '@/components/List/Guarantee/Guarantee.vue'
+import {regexValidation, regexValue} from "@/utils/regexValue";
 
 export default defineComponent({
     name: 'RequestLoan',
@@ -19,7 +20,7 @@ export default defineComponent({
 
         const activeLoan = computed(() => loansStore.getters.getActiveLoan())
 
-        const errorValue = computed(() => !(requestLoan.value.amount! > 0 && requestLoan.value.amount! <= (Number(guarantee.value.guarantee_credit_limit!) - Number(activeLoan.value.balance))))
+        const errorValue = computed(() => !(Number(regexValidation(requestLoan.value.amount!)) > 0 && Number(regexValidation(requestLoan.value.amount!)) <= (Number(guarantee.value.guarantee_credit_limit!) - Number(activeLoan.value.balance))))
 
         const guarantee = computed(() => guaranteeStore.getters.getSelectedGuarantee())
 
@@ -39,6 +40,7 @@ export default defineComponent({
                 const { user_id } = userStorage.getters.getStateProfile()
                 requestLoan.value.user_id = user_id
                 requestLoan.value.guarantee_id = route.params.id as string || guarantee.value.guarantee_id!
+                requestLoan.value.amount = regexValue(requestLoan.value.amount)
                 const { data, success, status } = await loanRequest.createRequest(requestLoan.value)
                 console.log('create loan', data)
                 if (status === 409) {
@@ -80,6 +82,7 @@ export default defineComponent({
         }
 
         return {
+            getIdParams,
             createRequest,
             dismissModal,
             onCancelSelected,
