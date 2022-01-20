@@ -23,9 +23,10 @@ router.beforeEach((to, from, next): void => {
       })
     } else {
       if (isNewUser) {
-        next({
-          name: 'OnBoarding'
-        })
+        next()
+        // next({
+        //   name: 'OnBoarding'
+        // })
       } else {
         if (to.name === 'OnBoarding') {
           next({
