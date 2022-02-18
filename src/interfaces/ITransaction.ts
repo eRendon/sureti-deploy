@@ -15,4 +15,5 @@ export interface ITransaction {
   user_id?: string
   lower_date? :string
   date_field?: string
+  trimestral_pay?: string
 }

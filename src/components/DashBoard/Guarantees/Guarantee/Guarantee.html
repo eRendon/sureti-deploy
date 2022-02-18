@@ -1,0 +1,31 @@
+<div class="sureti_guarantee_container" :class="isDetail ? 'single' : 'list'">
+    <div class="sureti_guarantee_summary">
+        <!-- ICON + GUARANTEE INFO -->
+        <img class="guarantee-thumbnail" src="@/assets/img/icons/property.svg" alt="silueta de una casa" />
+        <div class="sureti_guarantee_summary_info_title">
+            <h4>{{ guarantee.label ? guarantee.label : guarantee.real_estate_type + ' en ' + guarantee.real_estate_neighborhood }}</h4>
+            <p>{{ guarantee.real_estate_city }}, {{ guarantee.real_estate_province }}</p>
+        </div>
+        <!-- INDICATORS -->
+        <div>
+            <indicators  :balance="guarantee.balance"
+                         indicatorType="currency"
+                         :pendingInterest="pending"
+                         :data="indicators"></indicators>
+            <slot name="indicators">
+                <indicators :data="conditions" v-if="isDetail"></indicators>
+                <indicators :data="features" v-if="isDetail"></indicators>
+            </slot>
+        </div>
+
+        <div class="summary_ver-detalle_container flex" v-if="!isDetail">
+            <button class="summary_ver-detalle" @click.stop="onDetailGuarantee">
+            Ver detalle <img src="@/assets/img/icons/plus-icon.svg" alt="" />
+            </button>
+        </div>
+    </div><!-- .sureti_guarantee_summary -->
+</div><!-- .sureti_guarantee_container -->
+
+<div>
+    <slot name="movements"></slot>
+</div>

@@ -1,12 +1,13 @@
 import { createApp } from 'vue'
 
 import App from '../App.vue'
-import { formatCurrency } from '@/plugins/filters'
+import { formatAmount, formatCurrency } from '@/plugins/filters'
 
 const app = createApp(App);
 
 app.config.globalProperties.$filters = {
-  formatCurrency
+  formatCurrency,
+  formatAmount
 }
 
 // app.mixin(currency)

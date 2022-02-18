@@ -1,10 +1,11 @@
 <div class="sureti-movement-list">
    <div>
     <header id="sureti-dashboard-list-header">
-        <h2>Últimos movimientos:</h2>
+        <h2>Movimientos</h2>
+        <p v-if="profile.user_type?.includes('investor')">Últimos 90 días</p>
     </header>
         
-        <div class="sureti-movement-list-filters" v-if="profile.user_type === 'client'">
+        <div class="sureti-movement-list-filters" v-if="profile.user_type?.includes('client')">
             <label for="isPayment" class="sureti-movement-list-filter">
                 Pagos
                 <input id="isPayment" :value="false" v-model="isPayments" type="radio">
@@ -14,6 +15,17 @@
                 <input id="notPayment" :value="true" v-model="isPayments" type="radio">
             </label>
         </div>
+       <div v-else>
+<!--           <select v-model="trimestral_pay">-->
+<!--               <option value="03">Ene - Mar</option>-->
+<!--               <option value="06">Abr - Jun</option>-->
+<!--               <option value="10">Jul - Sep</option>-->
+<!--               <option value="12">Oct - Dic</option>-->
+<!--           </select>-->
+<!--           <select v-model="year">-->
+<!--               <option value="03" v-for="year in rangeYear()">{{ year }}</option>-->
+<!--           </select>-->
+       </div>
 <!--        <button @click="showFilter = true">FILTRO</button>-->
     </div>
 
@@ -35,12 +47,14 @@
             <span v-if="movement.transaction_type === 'interest_payment_transaction'">Pago de intereses</span>
             <span v-if="movement.transaction_type === 'capital_payment_transaction'">Abono a capital</span>
             <span v-if="movement.transaction_type === 'investment_disbursement'">Desembolso de inversión</span>
-            ({{ movement.creation_date }})
+                <span class="movement-date">{{ movement.creation_date }}</span>
         </div>
         <p class="hide">{{ movement.transaction_type }}</p>
         <div class="sureti-movement-summary-details">
-            <span v-if="movement.amount"> {{ $filters.formatCurrency(movement.amount) }}</span>
-            <span> ({{ movement.state }})</span>
+            <span  class="movement-amount" v-if="movement.amount"> {{ $filters.formatCurrency(movement.amount) }}</span>
+            <img class="movement-state-icon" v-if="movement.state == 'verified transaction'" src="@/assets/img/icons/approved.svg" />
+            <img class="movement-state-icon" v-if="movement.state?.includes('unverified')" src="@/assets/img/icons/unverified.svg" />
+            <img class="movement-state-icon" v-if="!movement.state?.includes('verified')" src="@/assets/img/icons/rejected.svg" />
         </div>
     </div>
 </div>

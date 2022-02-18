@@ -15,7 +15,6 @@ const actions = {
   },
   async validateUserType(): Promise<void> {
     const profile = getters.getStateProfile()
-    console.log(profile)
     mutationAuth.setIsLogged(true)
     if (!profile.user_type) {
       await router.push({

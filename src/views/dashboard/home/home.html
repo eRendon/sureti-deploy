@@ -5,9 +5,12 @@
         </div>
     </div>
     <div id="sureti-dashboard-list-column" class="sureti-flex-col" >
-        <div id="sureti-dashboard-list-type">
+        <div id="sureti-dashboard-list-type" :class="stateBrowser === 'prestamos' ? '' : 'hide'">
             <button @click="onSelectComponent('Guarantee')">Ver {{ stateBrowser === 'prestamos' ? 'garantías' : 'Inversiones'}}</button>&nbsp;
             <button @click="onSelectComponent('Movements')">Ver movimientos</button>
+        </div>
+        <div id="sureti-dashboard-list-type" :class="stateBrowser === 'prestamos' ? 'hide' : ''">
+            <h2>Inversiones</h2>
         </div>
 
         <div>

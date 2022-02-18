@@ -20,7 +20,8 @@ const actions = {
   async loadFlowInvestment (): Promise<void> {
     const { total_investments, total_investment_interests, total_received_interest_payments, total_received_capital_payments } = userStorage.getters.getStateProfile()
     this.indicatorsInvestment(Number(total_investments),Number(total_investment_interests), Number(total_received_interest_payments), Number(total_received_capital_payments) )
-    await investmentStore.actions.getInvestments()
+    // await investmentStore.actions.getInvestments()
+    await investmentStore.actions.getGuaranteesInInvestments()
   },
 
   indicatorsClient(total_loans: number, total_loans_interest: number, total_interest_payments: number, total_capital_payments: number, total_guarantees_credit_limit: number) {

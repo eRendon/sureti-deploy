@@ -8,8 +8,9 @@ import { authStorage, modalStore } from '@/storage'
  */
 
 const apiClient: AxiosInstance = axios.create({
-  baseURL: 'https://sureti-client-api.oiti.cloud',
+  // baseURL: 'https://sureti-client-api.oiti.cloud',
   // baseURL: 'http://71516d6a71f2.ngrok.io/proline/web/client',
+  baseURL: 'http://ec2-100-25-145-217.compute-1.amazonaws.com:9000',
   headers: {
     'Content-Type': 'application/json'
   }

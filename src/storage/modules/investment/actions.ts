@@ -10,6 +10,12 @@ const actions = {
             investmentStore.mutations.setInvestments(data)
         }
         loaderStore.actions.loadingOverlay().dismiss()
+    },
+    async getGuaranteesInInvestments (): Promise<void> {
+        const { data, success } = await investmentRequest.getGuaranteesInInvestments()
+        if (success) {
+            investmentStore.mutations.setGuarantees(data)
+        }
     }
 }
 

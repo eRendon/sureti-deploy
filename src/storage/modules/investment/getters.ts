@@ -1,9 +1,11 @@
 import state from '@/storage/modules/investment/state'
-import { IInvestment } from '@/interfaces/IInvestment'
+import { IGuaranteeInInvestment, IInvestment } from '@/interfaces/IInvestment'
 
 
 const getters = {
-    getInvestments: (): IInvestment[] => state.investments
+    getInvestments: (): IInvestment[] => state.investments,
+    getGuarantees: (): IGuaranteeInInvestment[] => state.guarantees,
+    getSelectedGuarantee: (): IGuaranteeInInvestment => state.selectedGuarantee
 }
 
 export default getters

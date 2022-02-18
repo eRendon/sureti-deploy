@@ -1,0 +1,7 @@
+<div class="guarantee-summary-indicators-box flex">
+    <div v-for="indicator in data" :class="indicator.class ? indicator.class : ''">
+        <h6>{{ indicator.head }}</h6>
+        <h4 :class="[indicator.class, styleClass]">{{ indicator.body }}</h4>
+        <p>{{ indicator.footer }}</p>
+    </div>
+</div>

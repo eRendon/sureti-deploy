@@ -13,6 +13,68 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,200;0,400;0,600;0,800;1,200;1,400;1,600;1,800&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 */
 
+.flex {
+  display: flex;
+}
+.flex-col-12 {
+  flex: 12;
+  flex-direction: column;
+}
+.flex-col-11 {
+  flex: 11;
+  flex-direction: column;
+}
+.flex-col-10 {
+  flex: 10;
+  flex-direction: column;
+}
+.flex-col-9 {
+  flex: 9;
+  flex-direction: column;
+}
+.flex-col-8 {
+  flex: 8;
+  flex-direction: column;
+}
+.flex-col-7 {
+  flex: 7;
+  flex-direction: column;
+}
+.flex-col-6 {
+  flex: 6;
+  flex-direction: column;
+}
+.flex-col-5 {
+  flex: 5;
+  flex-direction: column;
+}
+.flex-col-4 {
+  flex: 4;
+  flex-direction: column;
+}
+.flex-col-3 {
+  flex: 3;
+  flex-direction: column;
+}
+.flex-col-2 {
+  flex: 2;
+  flex-direction: column;
+}
+.flex-col-1 {
+  flex: 1;
+  flex-direction: column;
+}
+
+.grid {
+  display: grid;
+}
+
+* {
+  --main-color: #514ac6;
+  --secondary-color: #a29eed;
+  --main-bg-color: #f6f6f6;
+}
+
 html, body {
   padding:0;
   margin:0;
@@ -286,6 +348,7 @@ ul {
   background-color:#fff;
   transition: background-color 0.15s ease-in-out;
   border-radius:30px;
+  z-index:999999;
 }
 .sureti-movement-modal-close:hover {
   background-color:#ddd;
