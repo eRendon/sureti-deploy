@@ -20,7 +20,7 @@ export default defineComponent({
     },
     setup (props, { emit }) {
         const app = getCurrentInstance();
-        const filters = app.appContext.config.globalProperties.$filters
+        const filters = app?.appContext.config.globalProperties.$filters
         console.log(filters)
 
         const onDetailGuarantee = (): void => {
